@@ -1,0 +1,196 @@
+p { 
+    display: table;
+    margin:auto;
+    width:800px;
+    padding-bottom:20px;
+    font-family:Helvetica;
+    font-size: 1.3em;
+    text-align: justify;
+    color: #BBB
+    /* border-bottom:1px dotted; */
+    /* display: inline-block; */
+}
+ul { 
+    display: table;
+    margin:auto;
+    width:800px;
+    padding-bottom:20px;
+    font-size: 1.3em;
+    font-family:Helvetica;
+    color: #BBB
+    /* border-bottom:1px dotted; */
+    /* display: inline-block; */
+}
+h3 { 
+    display: table;
+    margin:auto;
+    width:800px;
+    padding-bottom:20px;
+    font-size: 2em;
+    font-family:Helvetica;
+    color: #BBB
+    /* border-bottom:1px dotted; */
+    /* display: inline-block; */
+}
+h4 { 
+    display: table;
+    margin:auto;
+    width:800px;
+    padding-bottom:20px;
+    font-size: 1.5em;
+    font-family:Helvetica;
+    color: #BBB
+    /* border-bottom:1px dotted; */
+    /* display: inline-block; */
+}
+svg { 
+    display: block;
+    margin:auto;
+}
+label { 
+    background-color: white;
+    padding: 8px 16px;
+    display: table;
+    margin:auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    font-family:Helvetica;
+    /* border-bottom:1px dotted; */
+    /* display: inline-block; */
+}
+select { 
+    background-color: white;
+    padding: 8px 16px;
+    display: table;
+    margin:auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    font-family:Helvetica;
+    /* border-bottom:1px dotted; */
+    /* display: inline-block; */
+}
+
+.plotTitle {
+    font-size:0.8em;
+    font-weight: bold;
+    font-family:Helvetica;
+    fill:white
+    /* user-select: none; */
+}
+
+@media (max-width: 1500px) {
+    
+    .plotTitle {
+        font-size:0.6em;
+        font-weight: bold;
+        font-family:Helvetica;
+        fill:white
+        /* user-select: none; */
+    }
+
+}
+
+/* Style tab links */
+.tablink4 {
+    background-color: #BBBBBB;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+    height: 80px;
+    font-family:Helvetica;
+}
+
+.tablink4:hover {
+    background-color: #777;
+}
+
+/* Style tab links */
+.tablink3 {
+    background-color: #222;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 5px;
+    font-size: 18px;
+    width: 33%;
+    height: 40px;
+    font-family:Helvetica;
+}
+
+.tablink3:hover {
+    background-color: #777;
+}
+
+/* Style tab links */
+.tablink6 {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 16.66%;
+    height: 80px;
+    font-family:Helvetica;
+}
+
+.tablink6:hover {
+    background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabContent {
+    /* color: white; */
+    display: none;
+    padding: 60px 0px 0px 0px;
+    height: 100%;
+    font-family:Helvetica;
+    background-color:#000000;
+}
+
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 200px;					
+    height: 30px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+
+
+.axiswhite line{
+    stroke: white;
+}
+
+.axiswhite path{
+    stroke: white;
+}
+
+.axiswhite text{
+    fill: white;
+}
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+  margin: 0
+}
+
+body {
+    font-family: Helvetica, Sans-Serif;    
+}
