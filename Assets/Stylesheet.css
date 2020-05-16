@@ -194,3 +194,13 @@ button::-moz-focus-inner {
 body {
     font-family: Helvetica, Sans-Serif;    
 }
+
+.ActionTable {
+    width: 80%;
+    text-align:left;
+    vertical-align:middle;
+    padding:2px;
+    color:white;
+    text-align:left;
+    font-size:1em;
+}

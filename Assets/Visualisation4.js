@@ -888,7 +888,22 @@ fBuildVisualisation = function (
                         if ( Panel3Click['endX'] == null ) {
 
                             mouseHoverTimeout[pitchElementName] = setTimeout(
-                                function () {
+                                function () {                                    
+                                    
+                                    fUpdateActionTable(
+                                        dataAllEvents = dataAllEvents,
+                                        svgPanel = svgPanel,
+                                        x = Panel3Click['x'],
+                                        y = Panel3Click['y'],
+                                        endX = null,
+                                        endY = null,
+                                        eventName = null,
+                                        iHowMany = 5,
+                                        nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                        nOneDimSearchRadius = nOneDimSearchRadius,
+                                        TableID = 'ActionCounts',
+                                        PositionsToInclude = PositionsToInclude
+                                    )
 
                                     svgPanel.selectAll(".histogramindicators")
                                         // .attr('opacity', 1)
@@ -990,6 +1005,23 @@ fBuildVisualisation = function (
                                         .attr("stroke", 'black')
                                         .attr("r", 8)
                                         .moveToFront()
+
+                                    
+                                    fUpdateActionTable(
+                                        dataAllEvents = dataAllEvents,
+                                        svgPanel = svgPanel,
+                                        x = d.x,
+                                        y = d.y,
+                                        endX = d.endX,
+                                        endY = d.endY,
+                                        eventName = d.event,
+                                        iHowMany = 5,
+                                        nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                        nOneDimSearchRadius = nOneDimSearchRadius,
+                                        TableID = 'ActionCounts',
+                                        PositionsToInclude = PositionsToInclude
+                                    )
+    
                                     
                                 },
                                 mouseHoverTimeoutValue
@@ -1018,6 +1050,21 @@ fBuildVisualisation = function (
 
                         }
                         
+                        updatePanel3HighlightsForDestinationHovers(
+                            d.endX,
+                            d.endY,
+                            cContentPanelId,
+                            pitchElementOriginPanel3,
+                            pitchElementOriginCumulativePanel3,
+                            pitchElementPassPanel3,
+                            pitchElementPassCumulativePanel3,
+                            pitchElementRunPanel3,
+                            pitchElementRunCumulativePanel3,
+                            xScale,
+                            yScale,
+                            svgPanel
+                        )
+
                         dblclickTimeout[pitchElementName] = setTimeout(
                             function() {
             
@@ -1027,21 +1074,6 @@ fBuildVisualisation = function (
                                         '2px'
                                     )
                                 
-                                updatePanel3HighlightsForDestinationHovers(
-                                    d.endX,
-                                    d.endY,
-                                    cContentPanelId,
-                                    pitchElementOriginPanel3,
-                                    pitchElementOriginCumulativePanel3,
-                                    pitchElementPassPanel3,
-                                    pitchElementPassCumulativePanel3,
-                                    pitchElementRunPanel3,
-                                    pitchElementRunCumulativePanel3,
-                                    xScale,
-                                    yScale,
-                                    svgPanel
-                                )
-
                                 svgPanel.selectAll(".histogramindicators")
                                     // .attr('opacity', 0.5)
                                     // .attr('r')
@@ -1062,6 +1094,22 @@ fBuildVisualisation = function (
                                     .attr("r", 8)
                                     .moveToFront()
 
+
+                                
+                                fUpdateActionTable(
+                                    dataAllEvents = dataAllEvents,
+                                    svgPanel = svgPanel,
+                                    x = d.x,
+                                    y = d.y,
+                                    endX = d.endX,
+                                    endY = d.endY,
+                                    eventName = d.event,
+                                    iHowMany = 5,
+                                    nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                    nOneDimSearchRadius = nOneDimSearchRadius,
+                                    TableID = 'ActionCounts',
+                                    PositionsToInclude = PositionsToInclude
+                                )
 
             
                                 Panel3Click['PlayPanelOpen'] = true
@@ -1102,7 +1150,21 @@ fBuildVisualisation = function (
                         Panel3Click['event'] = null
                         Panel3Click['endX'] = null
                         Panel3Click['endY'] = null 
-
+                                
+                        fUpdateActionTable(
+                            dataAllEvents = dataAllEvents,
+                            svgPanel = svgPanel,
+                            x = d.x,
+                            y = d.y,
+                            endX = null,
+                            endY = null,
+                            eventName = null,
+                            iHowMany = 5,
+                            nTwoDimSearchRadius = nTwoDimSearchRadius,
+                            nOneDimSearchRadius = nOneDimSearchRadius,
+                            TableID = 'ActionCounts',
+                            PositionsToInclude = PositionsToInclude
+                        )
 
                         d3.selectAll('.highlightDestination')
                             .style(
@@ -1216,6 +1278,22 @@ fBuildVisualisation = function (
                             mouseHoverTimeout[pitchElementName] = setTimeout(
                                 function () {
 
+
+                                    fUpdateActionTable(
+                                        dataAllEvents = dataAllEvents,
+                                        svgPanel = svgPanel,
+                                        x = null,
+                                        y = null,
+                                        endX = Panel3Click['endX'],
+                                        endY = Panel3Click['endY'],
+                                        eventName = Panel3Click['event'],
+                                        iHowMany = 5,
+                                        nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                        nOneDimSearchRadius = nOneDimSearchRadius,
+                                        TableID = 'ActionCounts',
+                                        PositionsToInclude = PositionsToInclude
+                                    )
+
                                     svgPanel.selectAll(".histogramindicators")
                                         // .attr('opacity', 1)
                                         .attr("stroke-opacity", 0)
@@ -1314,6 +1392,23 @@ fBuildVisualisation = function (
                                         .attr("stroke", 'black')
                                         .attr("r", 8)
                                         .moveToFront()
+
+
+                                    fUpdateActionTable(
+                                        dataAllEvents = dataAllEvents,
+                                        svgPanel = svgPanel,
+                                        x = d.x,
+                                        y = d.y,
+                                        endX = d.endX,
+                                        endY = d.endY,
+                                        eventName = d.event,
+                                        iHowMany = 5,
+                                        nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                        nOneDimSearchRadius = nOneDimSearchRadius,
+                                        TableID = 'ActionCounts',
+                                        PositionsToInclude = PositionsToInclude
+                                    )
+    
                                     
                                 },
                                 mouseHoverTimeoutValue
@@ -1335,6 +1430,23 @@ fBuildVisualisation = function (
 
                         Panel3Click['x'] = d.x
                         Panel3Click['y'] = d.y
+                            
+                        updatePanel3HighlightsForOriginHovers(
+                            d.x,
+                            d.y,
+                            pitchElementOriginPanel3,
+                            pitchElementOriginCumulativePanel3,
+                            pitchElementShotPanel3,
+                            pitchElementShotCumulativePanel3,
+                            pitchElementPassPanel3,
+                            pitchElementPassCumulativePanel3,
+                            pitchElementRunPanel3,
+                            pitchElementRunCumulativePanel3,
+                            cContentPanelId,
+                            xScale,
+                            yScale,
+                            Panel3Click
+                        )
 
                         dblclickTimeout[pitchElementName] = setTimeout(
                             function() {
@@ -1344,23 +1456,6 @@ fBuildVisualisation = function (
                                         "stroke-width",
                                         '2px'
                                     )
-                            
-                                updatePanel3HighlightsForOriginHovers(
-                                    d.x,
-                                    d.y,
-                                    pitchElementOriginPanel3,
-                                    pitchElementOriginCumulativePanel3,
-                                    pitchElementShotPanel3,
-                                    pitchElementShotCumulativePanel3,
-                                    pitchElementPassPanel3,
-                                    pitchElementPassCumulativePanel3,
-                                    pitchElementRunPanel3,
-                                    pitchElementRunCumulativePanel3,
-                                    cContentPanelId,
-                                    xScale,
-                                    yScale,
-                                    Panel3Click
-                                )
 
                                 svgPanel.selectAll(".histogramindicators")
                                     // .attr('opacity', 0.5)
@@ -1381,6 +1476,22 @@ fBuildVisualisation = function (
                                     .attr("stroke", 'black')
                                     .attr("r", 8)
                                     .moveToFront()
+
+                                fUpdateActionTable(
+                                    dataAllEvents = dataAllEvents,
+                                    svgPanel = svgPanel,
+                                    x = d.x,
+                                    y = d.y,
+                                    endX = d.endX,
+                                    endY = d.endY,
+                                    eventName = d.event,
+                                    iHowMany = 5,
+                                    nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                    nOneDimSearchRadius = nOneDimSearchRadius,
+                                    TableID = 'ActionCounts',
+                                    PositionsToInclude = PositionsToInclude
+                                )
+
 
                                 Panel3Click['PlayPanelOpen'] = true
                                     
@@ -1425,7 +1536,22 @@ fBuildVisualisation = function (
                                 '4px'
                             )
                         
-                                            
+                        
+                        fUpdateActionTable(
+                            dataAllEvents = dataAllEvents,
+                            svgPanel = svgPanel,
+                            x = null,
+                            y = null,
+                            endX = Panel3Click['endX'],
+                            endY = Panel3Click['endY'],
+                            eventName = Panel3Click['event'],
+                            iHowMany = 5,
+                            nTwoDimSearchRadius = nTwoDimSearchRadius,
+                            nOneDimSearchRadius = nOneDimSearchRadius,
+                            TableID = 'ActionCounts',
+                            PositionsToInclude = PositionsToInclude
+                        )
+
                         clearSelection()
                     
                     }
@@ -2215,11 +2341,8 @@ fBuildVisualisation = function (
                 )            
 
 
-
-
-
                 
-            fDrawAllEventsOrigin(
+            fDrawEventBaseOrigin(
                 pitchElementOriginCumulativePanel3,
                 'pitchElementOriginCumulativePanel3',
                 xScale3,
@@ -2253,7 +2376,7 @@ fBuildVisualisation = function (
             
     
                 
-            fDrawAllEventsOrigin(
+            fDrawEventBaseOrigin(
                 pitchElementOriginPanel3,
                 'pitchElementOriginPanel3',
                 xScale3,
@@ -2287,7 +2410,7 @@ fBuildVisualisation = function (
             
     
 
-            fDrawEventDestination(
+            fDrawEventBaseDestination(
                 pitchElementPassPanel3,
                 'pitchElementPassPanel3',
                 xScale3,
@@ -2321,7 +2444,7 @@ fBuildVisualisation = function (
 
                 
 
-            fDrawEventDestination(
+            fDrawEventBaseDestination(
                 pitchElementPassCumulativePanel3,
                 'pitchElementPassCumulativePanel3',
                 xScale3,
@@ -2355,7 +2478,7 @@ fBuildVisualisation = function (
 
                 
 
-            fDrawEventDestination(
+            fDrawEventBaseDestination(
                 pitchElementRunPanel3,
                 'pitchElementRunPanel3',
                 xScale3,
@@ -2389,7 +2512,7 @@ fBuildVisualisation = function (
 
                 
 
-            fDrawEventDestination(
+            fDrawEventBaseDestination(
                 pitchElementRunCumulativePanel3,
                 'pitchElementRunPanel3',
                 xScale3,
@@ -2620,7 +2743,6 @@ fBuildVisualisation = function (
                 .attr("cy", function(d) { return histogramProbabilityTotalScaleWeightedExpectedGoals(d.WeightedExpectedGoals) })
                 .attr("fill", function(d) { return histogramProbabilityTotalScaleWeightedCount(d.WeightedCount) })
                 .attr("stroke", function(d) { return histogramProbabilityTotalScaleWeightedCount(d.WeightedCount) })
-                // .attr("stroke", function(d) { console.log(d.WeightedCount);console.log(d.WeightedCount/histogramProbabilityTotalScaleWeightedCount.domain()[1]);console.log(histogramProbabilityTotalScaleWeightedCount(d.WeightedCount) );return histogramProbabilityTotalScaleWeightedCount(d.WeightedCount) })
                 .attr("r", '1px' )
                 .attr("fill-opacity", 0.5)
                 .attr("stroke-opacity", 0.5)
@@ -2886,14 +3008,7 @@ fBuildVisualisation = function (
                 pitchElementPlaysMarkingsPanel0,
                 xScale1
             )
-
-            console.log(dataAllEvents)
-            console.log(eventName)
-            console.log(x)
-            console.log(y)
-            console.log(endX)
-            console.log(endY)
-
+            
             dataAllEventsSubset = dataAllEvents.filter(
                 function(p) {
 
@@ -4179,7 +4294,7 @@ fBuildVisualisation = function (
         }
 
 
-        fDrawEventDestination = function (
+        fDrawEventBaseDestination = function (
             pitchElement,
             pitchElementName,
             xScale3,
@@ -4257,6 +4372,7 @@ fBuildVisualisation = function (
                     
                         if ( Panel3Click['x'] == null ) {
                             
+                            svgPanel.selectAll("#ActionCounts").remove()
                             svgPanel.selectAll(".histogramindicators").remove()
                             svgPanel.selectAll(".histogramindicatorsshot").remove()
 
@@ -4300,6 +4416,8 @@ fBuildVisualisation = function (
                                     pitchElementRunCumulativePanel3,
                                     'highlightDestination'
                                 )
+
+
 
                                 
                             },
@@ -4360,6 +4478,21 @@ fBuildVisualisation = function (
                                         histogramProbabilityTotalScaleWeightedExpectedGoals
                                     )
 
+                                    fUpdateActionTable(
+                                        dataAllEvents = dataAllEvents,
+                                        svgPanel = svgPanel,
+                                        x = null,
+                                        y = null,
+                                        endX = d.endX,
+                                        endY = d.endY,
+                                        eventName = EventName,
+                                        iHowMany = 5,
+                                        nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                        nOneDimSearchRadius = nOneDimSearchRadius,
+                                        TableID = 'ActionCounts',
+                                        PositionsToInclude = PositionsToInclude
+                                    )
+
                                 } else {
 
 
@@ -4416,6 +4549,54 @@ fBuildVisualisation = function (
                                 )
                             
 
+                            if ( Panel3Click['x'] != null ) {
+                            
+                                Panel3Click['x'] = null
+                                Panel3Click['y'] = null                                
+                                    
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementOriginPanel3,
+                                    'highlightOrigin'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementOriginCumulativePanel3,
+                                    'highlightOrigin'
+                                )
+                                    
+                                    
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementShotPanel3,
+                                    'highlightOrigin'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementShotCumulativePanel3,
+                                    'highlightOrigin'
+                                )
+                                    
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementPassPanel3,
+                                    'highlightOrigin'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementPassCumulativePanel3,
+                                    'highlightOrigin'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementRunPanel3,
+                                    'highlightOrigin'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementRunCumulativePanel3,
+                                    'highlightOrigin'
+                                )
+
+                            }
+                            
                             updatePanel3ForDestinationHover(
                                 setCode,
                                 d.endX,
@@ -4440,10 +4621,23 @@ fBuildVisualisation = function (
                                 histogramProbabilityTotalScaleWeightedExpectedGoals
                             )
 
+                            fUpdateActionTable(
+                                dataAllEvents = dataAllEvents,
+                                svgPanel = svgPanel,
+                                x = null,
+                                y = null,
+                                endX = d.endX,
+                                endY = d.endY,
+                                eventName = d.event,
+                                iHowMany = 5,
+                                nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                nOneDimSearchRadius = nOneDimSearchRadius,
+                                TableID = 'ActionCounts',
+                                PositionsToInclude = PositionsToInclude
+                            )
+
                             Panel3Click['x'] = null
                             Panel3Click['y'] = null
-
-                            
 
                         },
                         dblclickTimeoutValue
@@ -4569,7 +4763,7 @@ fBuildVisualisation = function (
         }
 
             
-        fDrawAllEventsOrigin = function(
+        fDrawEventBaseOrigin = function(
             pitchElement,
             pitchElementName,
             xScale3,
@@ -4786,7 +4980,8 @@ fBuildVisualisation = function (
                                     iHowMany = 5,
                                     nTwoDimSearchRadius = nTwoDimSearchRadius,
                                     nOneDimSearchRadius = nOneDimSearchRadius,
-                                    TableID = 'ActionCounts'
+                                    TableID = 'ActionCounts',
+                                    PositionsToInclude
                                 )
 
                             },
@@ -4821,6 +5016,44 @@ fBuildVisualisation = function (
                                     "stroke-width",
                                     '4px'
                                 )
+
+                            if ( Panel3Click['endX'] != null ) {
+                                
+                                Panel3Click['endX'] = null
+                                Panel3Click['endY'] = null                                
+                                Panel3Click['event'] = null                                
+                                    
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementOriginPanel3,
+                                    'highlightDestination'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementOriginCumulativePanel3,
+                                    'highlightDestination'
+                                )
+                                    
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementPassPanel3,
+                                    'highlightDestination'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementPassCumulativePanel3,
+                                    'highlightDestination'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementRunPanel3,
+                                    'highlightDestination'
+                                )
+
+                                unhighlightHeatmapCoordinate(
+                                    pitchElementRunCumulativePanel3,
+                                    'highlightDestination'
+                                )
+
+                            }
                         
 
                             updatePanel3HighlightsForOriginHovers(
@@ -4870,9 +5103,26 @@ fBuildVisualisation = function (
                                 CountCutoff
                             )
 
+
+                            fUpdateActionTable(
+                                dataAllEvents = dataAllEvents,
+                                svgPanel = svgPanel,
+                                x = d.x,
+                                y = d.y,
+                                endX = null,
+                                endY = null,
+                                eventName = null,
+                                iHowMany = 5,
+                                nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                nOneDimSearchRadius = nOneDimSearchRadius,
+                                TableID = 'ActionCounts',
+                                PositionsToInclude
+                            )
+
                             Panel3Click['endX'] = null
                             Panel3Click['endY'] = null
                             Panel3Click['event'] = null
+
                         },
                         dblclickTimeoutValue
                     )
@@ -4958,7 +5208,8 @@ fBuildVisualisation = function (
             iHowMany = 5,
             nTwoDimSearchRadius,
             nOneDimSearchRadius,
-            TableID
+            TableID,
+            PositionsToInclude = []
         ) {
 
             dataAllEventsSubset = dataAllEvents.filter(
@@ -5062,8 +5313,8 @@ fBuildVisualisation = function (
                             (
                                 ( 
                                     Math.pow(
-                                        Math.pow( ( p.endx - endX ), 2 ) +
-                                        Math.pow( ( p.endY - endY ), 2 ), 
+                                        Math.pow((p.endY - endY), 2) +
+                                        Math.pow((p.endX - endX), 2), 
                                         0.5
                                     )
                                 ) <= nTwoDimSearchRadius 
@@ -5075,7 +5326,6 @@ fBuildVisualisation = function (
                     return bMeetsCriterion
                 }
             )
-
 
             var dataAllEventsSubsetGrouped = d3.nest()
                 .key(function(d) { return d.event; })
@@ -5128,6 +5378,7 @@ fBuildVisualisation = function (
             tableDivTable = tableDiv
                 .append("xhtml:div")
                 .append("table")
+                .attr("class", "ActionTable")
 
             // append header row
             tableDivTable.append('thead')
@@ -5135,9 +5386,6 @@ fBuildVisualisation = function (
                 .data(dataAllEventsSubsetGroupedFlatColumns).enter()
                 .append('th')
                 .text(function (d) { return d; })
-                .style('color','white')
-                .style('text-align','left')
-                .style('font-size', '1em')
 
 
             d3.select("table")
@@ -5151,8 +5399,6 @@ fBuildVisualisation = function (
                 .enter()
                 .append("td")
                 .text(function (d) {return d.value})
-                .style('color','white')
-                .style('font-size', '1em')
 
             var tableDivHeight = tableDivTable.node().getBoundingClientRect().height;
 
@@ -5165,20 +5411,6 @@ fBuildVisualisation = function (
 
 
     }
-
-    var colorContentScaleChoice = d3.select("#" + setSelectionContentPanelId).selectAll("input")
-        .data(['Scales only for selection'])
-        .enter()
-        .append('label')
-            .attr('for',function(d,i){ return 'a'+i; })
-            .text(function(d) { return d; })
-        .append("input")
-            // .attr("checked", true)
-            .attr("type", "checkbox")
-            .attr("id", "colorContentScaleCheckbox")
-
-            
-
 
     var setSelectionDashboardPanelIdDiv = d3.select("#" + setSelectionDashboardPanelId)
         .append('div')
@@ -5359,19 +5591,6 @@ fBuildVisualisation = function (
             )
 
         
-    var dropdownSetContent = d3.select("#" + setSelectionContentPanelId)
-        .append("select")
-        .attr("id","setSelectionContent")
-
-
-    dropdownSetContent.selectAll("option")
-        .data(allSetCodes)
-        .enter().append("option")
-        .attr("value", function (d) { return d; })
-        .text(function (d, i) { return allSetNames[i]; })
-        .property("selected", function(d){ return d === selectedSetCode; })
-
-
     var dropdownSetDashboard = setSelectionDashboardPanelIdDiv
         .append("select")
         .attr("id","setSelectionDashboard")
@@ -6949,15 +7168,6 @@ fBuildVisualisation = function (
 
         d3.selectAll('.plotTitle.' + cDashboardPanelId).text('Updating')
 
-        // d3.select('#' + cContentPanelId).selectAll('*').remove()
-
-        // d3.select("#" + cContentPanelId).selectAll("*").remove()
-
-        // createPanelParent(
-        //     selectedSetCode,
-        //     cContentPanelId
-        // )
-
         if ( colorScaleRelativetoSelection == true ) {
 
             whichColourScale = selectedSetCode + '/'
@@ -6981,42 +7191,6 @@ fBuildVisualisation = function (
         
     }
     
-    colorContentScaleChoice
-        .on("click", function(d) {
-
-            selectedSetCode = dropdownSetContent.property("value")
-
-            updatePositionsToIncludeScale(selectedSetCode)
-
-            initiateContentSetChange(
-                selectedSetCode,
-                cContentPanelId,
-                allSetNames[allSetCodes.indexOf(selectedSetCode)],
-                d3.select(this).property('checked'),
-                cWhatScaleToUse,
-                PositionsToInclude
-            )
-
-        });
-
-    dropdownSetContent
-        .on("change", function(d) { 
-
-            selectedSetCode = d3.select(this).property("value")
-
-            updatePositionsToIncludeScale(selectedSetCode)
-
-            initiateContentSetChange(
-                selectedSetCode,
-                cContentPanelId,
-                allSetNames[allSetCodes.indexOf(selectedSetCode)],
-                colorContentScaleChoice.property('checked'),
-                cWhatScaleToUse,
-                PositionsToInclude
-            )
-
-        });
-
         
     colorDashboardScaleChoice
         .on("click", function(d) {
@@ -7069,29 +7243,8 @@ fBuildVisualisation = function (
 
         });
 
-    // createContentPanelParent(
-    //     selectedSetCode,
-    //     cContentPanelId,
-    //     bExplainerTest
-    // )
 
-    // updateContentPanelParentWithData(
-    //     selectedSetCode,
-    //     cContentPanelId,
-    //     cWhatScaleToUse,
-    //     selectedSetName,
-    //     postCode,
-    //     PositionsToInclude
-    // )
-
-    createDashboardPanelParent(
-        selectedSetCode,
-        cDashboardPanelId,
-        bExplainerTest
-    )
-
-
-    if ( colorContentScaleChoice.property('checked') == true ) {
+    if ( colorDashboardScaleChoice.property('checked') == true ) {
 
         whichColourScale = selectedSetCode + '/'
 
@@ -7100,6 +7253,12 @@ fBuildVisualisation = function (
         whichColourScale = cWhatScaleToUse
 
     }
+    
+    createDashboardPanelParent(
+        selectedSetCode,
+        cDashboardPanelId,
+        bExplainerTest
+    )
 
     updateDashboardPanelParentWithData(
         selectedSetCode,
