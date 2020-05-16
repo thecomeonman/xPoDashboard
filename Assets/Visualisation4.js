@@ -2966,8 +2966,6 @@ fBuildVisualisation = function (
                 }
             )
 
-            console.log(dataAllEventsSubset)
-
             dataAllPlaysSubset = []
 
             for (var j=0; j<dataAllEventsSubset.length; j++) {
@@ -3687,210 +3685,6 @@ fBuildVisualisation = function (
 
         }
         
-
-        updatePanel3ForEndHover = function(
-            setCode,
-            endX,
-            endY,
-            pitchElementOriginPanel3,
-            pitchElementOriginCumulativePanel3,
-            pitchElementShotPanel3,
-            pitchElementShotCumulativePanel3,
-            pitchElementPassPanel3,
-            pitchElementPassCumulativePanel3,
-            pitchElementRunPanel3,
-            pitchElementRunCumulativePanel3,
-            colorScales,
-            cContentPanelId,
-            xScale,
-            yScale,
-            dataAllEvents,
-            nTwoDimSearchRadius,
-            nOneDimSearchRadius,
-            dataOriginProbabilitiesFor,
-            dataOriginProbabilitiesShotFor,
-            dataOriginProbabilitiesPassFor,
-            dataOriginProbabilitiesRunFor,
-            svgPanel,
-            PositionsToInclude,
-            histogramProbabilityTotalScaleGoalProbability, 
-            histogramProbabilityTotalScaleWeightedExpectedGoals,
-            CountCutoff
-        ) {
-            
-            d3.csv(
-                './Data/' + setCode.replace(/_/g,'/') + "/DataGranular/x" + x + "_y" + y + "/AsOrigin.csv").then(
-                function( dataGranularOrigin ) {
-
-                    dataGranularOrigin.forEach(
-                        function(d){ 
-                            d['x'] = +d['x']; 
-                            d['y'] = +d['y']; 
-                            d['endX'] = +d['endX']; 
-                            d['endY'] = +d['endY']; 
-                            d['Count'] = +d['Count']; 
-                            d['WeightedCount'] = +d['WeightedCount']; 
-                            d['Goals'] = +d['Goals']; 
-                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                            d['GoalProbability'] = +d['GoalProbability']; 
-                        }
-                    );   
-
-                    dataGranularOrigin = dataGranularOrigin.filter(
-                        function(d) { return d.Count > CountCutoff; }
-                    )
-                                        
-                    updateDestinationHeatmap(
-                        pitchElementOriginPanel3,
-                        'pitchElementOriginPanel3',
-                        endX,
-                        endY,
-                        'Pass',
-                        dataGranularOrigin,
-                        cumulative = false,
-                        colorScales,
-                        xScale,
-                        yScale,
-                        dataAllEvents,
-                        pitchElementOriginPanel3,
-                        pitchElementOriginCumulativePanel3,
-                        pitchElementShotPanel3,
-                        pitchElementShotCumulativePanel3,
-                        pitchElementPassPanel3,
-                        pitchElementPassCumulativePanel3,
-                        pitchElementRunPanel3,
-                        pitchElementRunCumulativePanel3,
-                        cContentPanelId,
-                        nTwoDimSearchRadius,
-                        svgPanel,
-                        PositionsToInclude
-                    )
-                    pitchElementOriginPanel3.selectAll('.pitchMarkings').moveToFront();
-                    pitchElementOriginPanel3.selectAll('.highlightOrigin').moveToFront();
-                    pitchElementOriginPanel3.selectAll('.highlightDestination').moveToFront();
-// 
-                    updateDestinationHeatmap(
-                        pitchElementOriginCumulativePanel3,
-                        'pitchElementOriginCumulativePanel3',
-                        endX,
-                        endY,
-                        'Run',
-                        dataGranularOrigin,
-                        cumulative = false,
-                        colorScales,
-                        xScale,
-                        yScale,
-                        dataAllEvents,
-                        pitchElementOriginPanel3,
-                        pitchElementOriginCumulativePanel3,
-                        pitchElementShotPanel3,
-                        pitchElementShotCumulativePanel3,
-                        pitchElementPassPanel3,
-                        pitchElementPassCumulativePanel3,
-                        pitchElementRunPanel3,
-                        pitchElementRunCumulativePanel3,
-                        cContentPanelId,
-                        nTwoDimSearchRadius,
-                        svgPanel,
-                        PositionsToInclude
-                    )
-                    pitchElementOriginCumulativePanel3.selectAll('.pitchMarkings').moveToFront();
-                    pitchElementOriginCumulativePanel3.selectAll('.highlightOrigin').moveToFront();
-                    pitchElementOriginCumulativePanel3.selectAll('.highlightDestination').moveToFront();
-
-                    
-                    svgPanel.selectAll('.histogramindicators').remove()
-                    svgPanel.selectAll('.histogramindicatorsshot').remove()
-
-                    svgPanel.selectAll()
-                        .data(dataGranularOrigin)
-                        .enter()
-                        .append("circle")
-                        .attr(
-                            "class", 
-                            function(d) { 
-                                return "histogramindicators " + 
-                                d.event + 
-                                ' x' + d.x + "_y" + d.y + 
-                                ' endX' + d.endX + "_endY" + d.endY
-                            }
-                        )
-                        .attr("cx", function(d) { return histogramProbabilityTotalScaleGoalProbability(d.GoalProbability) })
-                        .attr("cy", function(d) { return histogramProbabilityTotalScaleWeightedExpectedGoals(d.WeightedExpectedGoals) })
-                        // .attr("fill", function(d) { return histogramProbabilityTotalScaleWeightedCount(d.WeightedCount) })
-                        .attr("stroke", 'white')
-                        .attr("fill", 'white')
-                        .attr("stroke-opacity", 0)
-                        .attr("stroke-width", 0)
-                        .attr("r", 2 )
-
-                    svgPanel.selectAll()
-                        .data(
-                            dataGranularOrigin.filter(
-                                function(d) {
-                                    return d.event == 'Shot';
-                                }
-                            )
-                        )
-                        .enter()
-                        .append("circle")                        
-                        .attr(
-                            "class", 
-                            function(d) { 
-                                return "histogramindicatorsshot " + 
-                                d.event + 
-                                ' x' + d.x + "_y" + d.y +
-                                ''
-                            }
-                        )
-                        .attr("cx", function(d) { return histogramProbabilityTotalScaleGoalProbability(d.GoalProbability) })
-                        .attr("cy", function(d) { return histogramProbabilityTotalScaleWeightedExpectedGoals(d.WeightedExpectedGoals) })
-                        // .attr("fill", function(d) { return histogramProbabilityTotalScaleWeightedCount(d.WeightedCount) })
-                        .attr("stroke", 'white')
-                        .attr("stroke-opacity", 1)
-                        .attr("stroke-width", 1)
-                        .attr("fill", 'white')
-                        .attr("r", 8 )
-
-                    svgPanel.selectAll()
-                        .data(
-                            dataGranularOrigin.filter(
-                                function(d) {
-                                    return d.event == 'Shot';
-                                }
-                            )
-                        )
-                        .enter()
-                        .append('text')
-                        .attr(
-                            "class", 
-                            function(d) { 
-                                return "histogramindicatorsshot " + 
-                                d.event + 
-                                ' x' + d.x + "_y" + d.y +
-                                ''
-                            }
-                        )
-                        .attr("x", function(d) { return histogramProbabilityTotalScaleGoalProbability(d.GoalProbability) })
-                        .attr("y", function(d) { return histogramProbabilityTotalScaleWeightedExpectedGoals(d.WeightedExpectedGoals) })
-                        .text('s')
-                        .attr("text-anchor", "middle")
-                        .attr("alignment-baseline", "central")
-                        .attr("fill", "white")
-
-
-                    hideBaseOriginData (
-                        pitchElementOriginPanel3,
-                        pitchElementOriginCumulativePanel3
-                    )
-                    
-                }
-            )
-            
-        
-
-        }
-
 
         updatePanel3ForOriginHover = async function(
             setCode,
@@ -4774,7 +4568,6 @@ fBuildVisualisation = function (
 
         }
 
-
             
         fDrawAllEventsOrigin = function(
             pitchElement,
@@ -4800,7 +4593,7 @@ fBuildVisualisation = function (
             pitchElementRunCumulativePanel3,
             setCode,
             dataAllEvents,
-            svgPanel3,
+            svgPanel,
             titleText,
             dataOriginProbabilitiesFor,
             dataOriginProbabilitiesShotFor,
@@ -4870,8 +4663,9 @@ fBuildVisualisation = function (
                                     pitchElementRunCumulativePanel3,
                                 )
 
-                                d3.selectAll('#svgPanel3').selectAll(".histogramindicators").remove()
-                                d3.selectAll('#svgPanel3').selectAll(".histogramindicatorsshot").remove()
+                                svgPanel.selectAll("#ActionCounts").remove()
+                                svgPanel.selectAll(".histogramindicators").remove()
+                                svgPanel.selectAll(".histogramindicatorsshot").remove()
 
                                         
                                 unhighlightHeatmapCoordinate(
@@ -4973,11 +4767,26 @@ fBuildVisualisation = function (
                                     dataOriginProbabilitiesShotFor,
                                     dataOriginProbabilitiesPassFor,
                                     dataOriginProbabilitiesRunFor,
-                                    svgPanel3,
+                                    svgPanel,
                                     PositionsToInclude,
                                     histogramProbabilityTotalScaleGoalProbability, 
                                     histogramProbabilityTotalScaleWeightedExpectedGoals,
                                     CountCutoff
+                                )
+
+
+                                fUpdateActionTable(
+                                    dataAllEvents = dataAllEvents,
+                                    svgPanel = svgPanel,
+                                    x = d.x,
+                                    y = d.y,
+                                    endX = null,
+                                    endY = null,
+                                    eventName = null,
+                                    iHowMany = 5,
+                                    nTwoDimSearchRadius = nTwoDimSearchRadius,
+                                    nOneDimSearchRadius = nOneDimSearchRadius,
+                                    TableID = 'ActionCounts'
                                 )
 
                             },
@@ -5054,7 +4863,7 @@ fBuildVisualisation = function (
                                 dataOriginProbabilitiesShotFor,
                                 dataOriginProbabilitiesPassFor,
                                 dataOriginProbabilitiesRunFor,
-                                svgPanel3,
+                                svgPanel,
                                 PositionsToInclude,
                                 histogramProbabilityTotalScaleGoalProbability, 
                                 histogramProbabilityTotalScaleWeightedExpectedGoals,
@@ -5113,7 +4922,7 @@ fBuildVisualisation = function (
                             xScale3,
                             yScale3,
                             dataAllEvents,
-                            svgPanel3,
+                            svgPanel,
                             PositionsToInclude,
                             histogramProbabilityTotalScaleGoalProbability, 
                             histogramProbabilityTotalScaleWeightedExpectedGoals
@@ -5136,6 +4945,224 @@ fBuildVisualisation = function (
             pitchElementMarkings.moveToFront()
 
         }
+
+
+        fUpdateActionTable = function (
+            dataAllEvents,
+            svgPanel,
+            x = null,
+            y = null,
+            endX = null,
+            endY = null,
+            eventName = null,
+            iHowMany = 5,
+            nTwoDimSearchRadius,
+            nOneDimSearchRadius,
+            TableID
+        ) {
+
+            dataAllEventsSubset = dataAllEvents.filter(
+                function(p) {
+
+                    bMeetsCriterion = true
+
+                    if ( bMeetsCriterion == true ) {
+
+                        if ( PositionsToInclude.length > 0 ) {
+
+                            bMeetsCriterion = bMeetsCriterion & (
+                                PositionsToInclude.indexOf(p.positionName) != -1
+                            )
+
+                        }
+
+                    }
+
+                    if ( bMeetsCriterion == true & eventName != null) {
+                        
+                        bMeetsCriterion = bMeetsCriterion & (
+                            p.event == eventName
+                        )
+
+                    }
+
+                    if ( bMeetsCriterion == true ) {
+                        
+                        bMeetsCriterion = bMeetsCriterion & (
+                            (
+                                p.event == 'Run' &
+                                ( 
+                                    Math.pow(
+                                        Math.pow( ( p.endX - p.x ), 2 ) +
+                                        Math.pow( ( p.endY - p.y ), 2 ), 
+                                        0.5 
+                                    )
+                                ) >= nRunMinimumLength
+                            ) | (
+                                p.event != 'Run'
+                            )
+                        )
+
+                    }
+
+                    if ( bMeetsCriterion == true ) {
+                        
+                        bMeetsCriterion = bMeetsCriterion & (
+                            (
+                                p.event == 'Pass' &
+                                p.recipientPositionName != ''
+                            ) | (
+                                p.event != 'Pass'
+                            )
+                        )
+
+                    }
+
+                    if ( 
+                        bMeetsCriterion == true & x != null & (
+                            p.event == 'Pass' | p.event == 'Run'
+                        )
+                    ) {
+
+                        bMeetsCriterion = bMeetsCriterion & (
+                            ( 
+                                Math.pow(
+                                    Math.pow( ( p.x - x ), 2 ) +
+                                    Math.pow( ( p.y - y ), 2 ), 
+                                    0.5
+                                )
+                            ) <= nTwoDimSearchRadius 
+                        )
+
+                    }
+
+                    if ( 
+                        bMeetsCriterion == true & x != null & (
+                            p.event == 'Shot'
+                        )
+                    ) {
+
+                        bMeetsCriterion = bMeetsCriterion & (
+                            ( 
+                                Math.pow(
+                                    Math.pow( ( p.x - x ), 2 ) +
+                                    Math.pow( ( p.y - y ), 2 ), 
+                                    0.5
+                                )
+                            ) <= nOneDimSearchRadius 
+                        )
+
+                    }
+
+                    if ( 
+                        bMeetsCriterion == true & endX != null
+                    ) {
+
+                        bMeetsCriterion = bMeetsCriterion & (
+                            (
+                                ( 
+                                    Math.pow(
+                                        Math.pow( ( p.endx - endX ), 2 ) +
+                                        Math.pow( ( p.endY - endY ), 2 ), 
+                                        0.5
+                                    )
+                                ) <= nTwoDimSearchRadius 
+                            )
+                        )
+
+                    }
+                    
+                    return bMeetsCriterion
+                }
+            )
+
+
+            var dataAllEventsSubsetGrouped = d3.nest()
+                .key(function(d) { return d.event; })
+                .key(function(d) { return d.positionName; })
+                .key(function(d) { return d.recipientPositionName; })
+                .rollup(function(v) { 
+                    return {
+                        Count: v.length
+                    }; 
+                })
+                .entries(dataAllEventsSubset)
+
+            var dataAllEventsSubsetGroupedFlat = []
+            
+            dataAllEventsSubsetGrouped.forEach(function(aggregate1) {
+                aggregate1.values.forEach(function(aggregate2) {
+                    aggregate2.values.forEach(function(aggregate3) {
+
+                        dataAllEventsSubsetGroupedFlat.push({
+                            Event: aggregate1.key, 
+                            From: aggregate2.key,
+                            To: aggregate3.key,
+                            Count: aggregate3.value.Count
+                        });
+
+                    });
+                });
+            });
+
+            dataAllEventsSubsetGroupedFlat = dataAllEventsSubsetGroupedFlat
+                .sort(
+                    function (a,b) {
+                        return d3.descending(a.Count, b.Count); 
+                    }
+                );
+
+            dataAllEventsSubsetGroupedFlat = dataAllEventsSubsetGroupedFlat.slice(0,iHowMany)
+
+            dataAllEventsSubsetGroupedFlatColumns = d3.keys(dataAllEventsSubsetGroupedFlat[0])
+            
+            svgPanel.selectAll('#' + TableID).remove()
+
+            var tableDiv = svgPanel.append("foreignObject")
+                .attr("x", xScale3(pitch.padding.left + pitch.padding.left + pitch.padding.left + pitch.padding.left + pitch.frame.width + pitch.frame.width + pitch.frame.width) + 0)
+                .attr("y", xScale3(panel3titlespace + pitch.frame.length + pitch.padding.top))
+                .attr("width", 280)
+                // .attr("height", 100)
+                .attr("id",TableID)
+                
+            tableDivTable = tableDiv
+                .append("xhtml:div")
+                .append("table")
+
+            // append header row
+            tableDivTable.append('thead')
+                .selectAll('th')
+                .data(dataAllEventsSubsetGroupedFlatColumns).enter()
+                .append('th')
+                .text(function (d) { return d; })
+                .style('color','white')
+                .style('text-align','left')
+                .style('font-size', '1em')
+
+
+            d3.select("table")
+                .selectAll("tr.data")
+                .data(dataAllEventsSubsetGroupedFlat).enter()
+                .append("tr")
+            
+            d3.selectAll("tr")
+                .selectAll("td")
+                .data(function(d) {return d3.entries(d)})
+                .enter()
+                .append("td")
+                .text(function (d) {return d.value})
+                .style('color','white')
+                .style('font-size', '1em')
+
+            var tableDivHeight = tableDivTable.node().getBoundingClientRect().height;
+
+            tableDiv.attr(
+                // 'height', 300
+                'height', tableDivHeight
+            );
+
+        }
+
 
     }
 
