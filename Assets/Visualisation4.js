@@ -5681,17 +5681,6 @@ fBuildVisualisation = function (
                     'click',
                     function ( d ) {
                         
-                        console.log(d)
-                        console.log(
-                            dataAllEventsSubset.filter(
-                                function(p) {
-                                    return d.Event == p.event &
-                                        d.To == p.recipientPositionName &
-                                        d.From == p.positionName;
-                                }
-                            )
-                        )
-
                         Panel3Click['PlayPanelOpen'] = true
 
                         fShowPlayPanel( 
@@ -6083,9 +6072,9 @@ fBuildVisualisation = function (
 
                     HelpOverlay
                         .append('rect')
-                        .attr('x', 20 * nRatioOfScreenSize)
+                        .attr('x', 50 * nRatioOfScreenSize)
                         .attr('y', 10 * nRatioOfScreenSize)
-                        .attr('width', 250 * nRatioOfScreenSize)
+                        .attr('width', 240 * nRatioOfScreenSize)
                         .attr('height', 170 * nRatioOfScreenSize)
                         .attr('fill','white')
                         .attr('stroke','black')
@@ -6093,7 +6082,7 @@ fBuildVisualisation = function (
 
                     HelpOverlay
                         .append('text')
-                        .attr('x', 40 * nRatioOfScreenSize)
+                        .attr('x', 70 * nRatioOfScreenSize)
                         .attr('y', 40 * nRatioOfScreenSize)
                         .attr('font-size', +nRatioOfScreenSize + 'em')
                         .text(
@@ -6505,6 +6494,48 @@ fBuildVisualisation = function (
                             
                         )
                         .call(wrap, 200 * nRatioOfScreenSize)
+
+
+
+                    HelpOverlay
+                        .append('rect')
+                        .attr('x', 1480 * nRatioOfScreenSize)
+                        .attr('y', 950 * nRatioOfScreenSize)
+                        .attr('width', 300 * nRatioOfScreenSize)
+                        .attr('height', 120 * nRatioOfScreenSize)
+                        .attr('fill','white')
+                        .attr('stroke','black')
+                        .attr('opacity', 1)
+                        .on("mouseover", function(d) {
+                            d3.select(this).style("cursor", "pointer"); 
+                        })
+                        .on("mouseout", function(d) {
+                            d3.select(this).style("cursor", "default"); 
+                        })
+                        .on(
+                            'click',
+                            function() {
+                                window.open('https://github.com/statsbomb/open-data', '_blank');
+                            }
+                        )
+
+                    HelpOverlay
+                        .append('text')
+                        .attr('x', 1510 * nRatioOfScreenSize)
+                        .attr('y', 980 * nRatioOfScreenSize)
+                        .attr('font-size', +nRatioOfScreenSize + 'em')
+                        .text(
+                            'Data source:'
+                        )
+                        .style('pointer-events', 'none')
+
+                    HelpOverlay
+                        .append('svg:image')
+                        .attr('xlink:href', function() { return 'https://raw.githubusercontent.com/statsbomb/open-data/master/stats-bomb-logo.png' })
+                        .attr('x', 1510 * nRatioOfScreenSize )
+                        .attr('y', 1000 * nRatioOfScreenSize )
+                        .attr('height', 50 * nRatioOfScreenSize )
+                        .style('pointer-events', 'none')
 
                 }
 
