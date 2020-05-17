@@ -1641,459 +1641,6 @@ fBuildVisualisation = function (
         }
 
 
-        fCreatePanel0 = function(
-            cContentPanelId,
-            dataOriginProbabilitiesShotFor,
-            colorScales,
-            selectedSetName
-        ) {
-
-            var svgPanel0 = d3.select("#" + cContentPanelId).append("svg")
-                .attr(
-                    "width", 
-                    2 * xScale2(pitch.frame.width)
-                )
-                .attr(
-                    "height", 
-                    xScale2(pitch.frame.length)
-                )
-                // .attr(
-                //     "style", 
-                //     "display:block;"
-                // )
-                // .attr(
-                //    "style", 
-                //    "margin-left:-" + 0 * xScale4(pitch.frame.width) + "px;margin-top:-" + 0 * xScale4(pitch.frame.length)
-                // )
-                ;
-
-
-            var pitchElementShotPanel0 = svgPanel0.append("g")
-                .attr(
-                    "transform", 
-                    "translate(" + xScale2(pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")"
-                )
-                
-            addPlotTitle( 
-                pitchElementShotPanel0,
-                'xPo from shots',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            // addPlotLegend( 
-            //     pitchElementShotPanel0,
-            //     xScale2,
-            //     nBlockWidth,
-            //     colorScales['myShotProbabilityColor'],
-            //     pitch.length
-            // )
-
-            
-            addPitchColor(
-                pitchElementShotPanel0,
-                xScale2
-            )
-                
-            var pitchElementShotMarkingsPanel0 = pitchElementShotPanel0
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementShotMarkingsPanel0,
-                xScale2
-            )
-
-            addPitchData(
-                pitchElementShotPanel0,
-                dataOriginProbabilitiesShotFor,
-                'Origin',
-                className = 'shot',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myShotProbabilityColor'],
-                'GoalProbability'
-            )
-
-            pitchElementShotMarkingsPanel0.moveToFront()
-
-
-            var pitchElementShotCumulativePanel0 = svgPanel0.append("g")
-                .attr(
-                    "transform", 
-                    "translate(" +xScale2(pitch.frame.width + pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")"
-                )
-
-            addPlotTitle( 
-                pitchElementShotCumulativePanel0,
-                'Total xPo generated p90 from shots',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            addPitchColor(
-                pitchElementShotCumulativePanel0,
-                xScale2
-            )
-                
-            var pitchElementShotMarkingsPanel0 = pitchElementShotCumulativePanel0
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementShotMarkingsPanel0,
-                xScale2
-            )
-                
-
-            addPitchData(
-                pitchElementShotCumulativePanel0,
-                dataOriginProbabilitiesShotFor,
-                'Origin',
-                className = 'shot',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myShotGoalsColor'],
-                'WeightedExpectedGoals'
-            )
-
-            pitchElementShotMarkingsPanel0.moveToFront()
-
-        }
-
-
-        fCreatePanel4 = function(
-            cContentPanelId,
-            dataOriginProbabilitiesPassFor,
-            colorScales,
-            selectedSetName
-        ) {
-                
-            var svgPanel4 = d3.select("#" + cContentPanelId).append("svg")
-                .attr(
-                    "width", 
-                    2 * xScale2(pitch.frame.width)
-                )
-                .attr(
-                    "height", 
-                    xScale2(pitch.frame.length)
-                )
-                // .attr(
-                //    "style", 
-                //    "margin-left:-" + 0 * xScale4(pitch.frame.width) + "px;margin-top:-" + 0 * xScale4(pitch.frame.length)
-                // )
-                ;
-
-            var pitchElementPassPanel4 = svgPanel4.append("g")
-                .attr("transform", "translate(" + xScale2(pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")")
-            
-            addPlotTitle(
-                pitchElementPassPanel4,
-                'xPo from passes',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            addPitchColor(
-                pitchElementPassPanel4,
-                xScale2
-            )
-                
-            var pitchElementMarkingsOriginPanel4 = pitchElementPassPanel4
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementMarkingsOriginPanel4,
-                xScale2
-            )         
-
-            addPitchData(
-                pitchElementPassPanel4,
-                dataOriginProbabilitiesPassFor,
-                'Origin',
-                'BaseOriginProbabilities',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myNonShotProbabilityColorOrigin'],
-                'GoalProbability'
-            )
-                
-            pitchElementMarkingsOriginPanel4.moveToFront()
-
-
-            var pitchElementPassCumulativePanel4 = svgPanel4.append("g")
-                .attr("transform", "translate(" +xScale2(pitch.frame.width + pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")")
-
-            
-            addPlotTitle(
-                pitchElementPassCumulativePanel4,
-                'Total xPo generated p90 from passes',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            addPitchColor(
-                pitchElementPassCumulativePanel4,
-                xScale2
-            )
-                
-            var pitchElementMarkingsOriginCumulativePanel4 = pitchElementPassCumulativePanel4
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementMarkingsOriginCumulativePanel4,
-                xScale2
-            )
-            
-            addPitchData(
-                pitchElementPassCumulativePanel4,
-                dataOriginProbabilitiesPassFor,
-                'Origin',
-                'OriginProbabilitiesCumulative',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myNonShotGoalsColorOrigin'],
-                'WeightedExpectedGoals'
-            )
-                
-            pitchElementMarkingsOriginCumulativePanel4.moveToFront()
-
-        }
-
-
-                            
-        fCreatePanel5 = function(
-            cContentPanelId,
-            dataOriginProbabilitiesRunFor,
-            colorScales,
-            selectedSetName
-        ) {        
-
-            var svgPanel5 = d3.select("#" + cContentPanelId).append("svg")
-                .attr(
-                    "width", 
-                    2 * xScale2(pitch.frame.width)
-                )
-                .attr(
-                    "height", 
-                    xScale2(pitch.frame.length)
-                )
-                // .attr(
-                //    "style", 
-                //    "margin-left:-" + 0 * xScale4(pitch.frame.width) + "px;margin-top:-" + 0 * xScale4(pitch.frame.length)
-                // )
-                ;
-
-            var pitchElementRunPanel5 = svgPanel5.append("g")
-                .attr("transform", "translate(" +xScale2(pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")")
-
-            
-            addPlotTitle(
-                pitchElementRunPanel5,
-                'xPo from carries',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-
-            addPitchColor(
-                pitchElementRunPanel5,
-                xScale2
-            )
-                
-            var pitchElementMarkingsOriginPanel5 = pitchElementRunPanel5
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementMarkingsOriginPanel5,
-                xScale2
-            )  
-
-            addPitchData(
-                pitchElementRunPanel5,
-                dataOriginProbabilitiesRunFor,
-                'Origin',
-                'BaseOriginProbabilities',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myNonShotProbabilityColorOrigin'],
-                'GoalProbability'
-            )
-
-            pitchElementMarkingsOriginPanel5.moveToFront()
-
-
-            var pitchElementRunCumulativePanel5 = svgPanel5.append("g")
-                .attr("transform", "translate(" +xScale2(pitch.frame.width + pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")")
-
-            addPlotTitle(
-                pitchElementRunCumulativePanel5,
-                'Total xPo generated p90 from carries',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            addPitchColor(
-                pitchElementRunCumulativePanel5,
-                xScale2
-            )
-                
-            var pitchElementMarkingsOriginCumulativePanel5 = pitchElementRunCumulativePanel5
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementMarkingsOriginCumulativePanel5,
-                xScale2
-            )
-
-            addPitchData(
-                pitchElementRunCumulativePanel5,
-                dataOriginProbabilitiesRunFor,
-                'Origin',
-                'OriginProbabilitiesCumulative',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myNonShotGoalsColorOrigin'],
-                'WeightedExpectedGoals'
-            ) 
-
-                
-            pitchElementMarkingsOriginCumulativePanel5.moveToFront()
-
-        }
-
-
-
-
-
-        fCreatePanel1 = function(
-            cContentPanelId,
-            dataOriginProbabilitiesFor,
-            colorScales,
-            selectedSetName
-        ) {
-            
-
-            var svgPanel1 = d3.select("#" + cContentPanelId).append("svg")
-                .attr(
-                    "width", 
-                    2 * xScale2(pitch.frame.width)
-                )
-                .attr(
-                    "height", 
-                    xScale2(pitch.frame.length)
-                )
-                // .attr(
-                //    "style", 
-                //    "margin-left:-" + 0 * xScale4(pitch.frame.width) + "px;margin-top:-" + 0 * xScale4(pitch.frame.length)
-                // )
-                ;
-
-            var pitchElementOriginPanel1 = svgPanel1.append("g")
-                .attr("transform", "translate(" + xScale2(pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")")
-
-            addPlotTitle(
-                pitchElementOriginPanel1,
-                'xPo overall',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            addPitchColor(
-                pitchElementOriginPanel1,
-                xScale2
-            )
-                
-            var pitchElementMarkingsOriginPanel1 = pitchElementOriginPanel1
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementMarkingsOriginPanel1,
-                xScale2
-            )         
-
-            addPitchData(
-                pitchElementOriginPanel1,
-                dataOriginProbabilitiesFor,
-                'Origin',
-                'BaseOriginProbabilities',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myProbabilityColorOrigin'],
-                'GoalProbability'
-            )
-
-            pitchElementMarkingsOriginPanel1.moveToFront()
-
-
-            var pitchElementOriginCumulativePanel1 = svgPanel1.append("g")
-                .attr("transform", "translate(" + xScale2(pitch.frame.width + pitch.padding.left) + "," + xScale2(pitch.padding.top) + ")")
-
-            addPlotTitle(
-                pitchElementOriginCumulativePanel1,
-                'Total xPo generated p90 overall',
-                xScale2,
-                nBlockWidth,
-                null,
-                cContentPanelId
-            )
-
-            addPitchColor(
-                pitchElementOriginCumulativePanel1,
-                xScale2
-            )
-                
-            var pitchElementMarkingsOriginCumulativePanel1 = pitchElementOriginCumulativePanel1
-                .append("g")
-                .attr('class','pitchMarkings');
-
-            addPitchOutlines(
-                pitchElementMarkingsOriginCumulativePanel1,
-                xScale2
-            )             
-
-            addPitchData(
-                pitchElementOriginCumulativePanel1,
-                dataOriginProbabilitiesFor,
-                'Origin',
-                'OriginProbabilitiesCumulative',
-                xScale2,
-                yScale2,
-                nBlockWidth,
-                colorScales['myGoalsColorOrigin'],
-                'WeightedExpectedGoals'
-            )
-
-            pitchElementMarkingsOriginCumulativePanel1.moveToFront()
-
-        }
-
 
         fCreatePanel3 = function(
             cContentPanelId,
@@ -6713,9 +6260,26 @@ fBuildVisualisation = function (
                 'block'
             )
 
+        svgLoading = d3.select('#' + cDashboardPanelId).append('svg')
+            .attr('width', nFullWidth)
+            .attr('height', 500 * nRatioOfScreenSize)
+
+        svgLoading.append('text')
+            .text('Loading data')
+            .style("text-anchor", "middle")
+            .attr('x', nFullWidth/2)
+            .attr('y', 500 * nRatioOfScreenSize / 2)
+            
+            .style('fill', 'white')
+            .style('font-size', ( 5 * nRatioOfScreenSize ) + 'em')
+
+        if ( true ) {
+
             d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/TimePlayed.csv').then( function(dataTimePlayed) {
                 
                 d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/ActionDistribution.csv').then( function(dataActionDistribution) {
+
+                    console.log('./Data/' + (setCode.substring(0, setCode.indexOf('_', setCode.indexOf('_') + 1))).replace(/_/g,'/') + '/AllEvents.csv')
 
                     d3.csv('./Data/' + (setCode.substring(0, setCode.indexOf('_', setCode.indexOf('_') + 1))).replace(/_/g,'/') + '/AllEvents.csv').then( function(dataAllEvents) {
 
@@ -6740,6 +6304,8 @@ fBuildVisualisation = function (
                                                             d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'DestinationScale.csv').then( function(dataDestinationScale) {
 
                                                                 d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'GranularScale.csv').then( function(dataGranularDestinationScale) {
+
+                                                                    svgLoading.remove()
 
                                                                     dataTimePlayed = dataTimePlayed[0]['TimePlayed']
 
@@ -7612,6 +7178,8 @@ fBuildVisualisation = function (
 
                 });
             });
+
+        }
 
 
     }
