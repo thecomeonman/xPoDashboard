@@ -6273,886 +6273,880 @@ fBuildVisualisation = function (
             .style('fill', 'white')
             .style('font-size', ( 5 * nRatioOfScreenSize ) + 'em')
 
-        if ( true ) {
+        d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/TimePlayed.csv').then( function(dataTimePlayed) {
+            
+            d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/ActionDistribution.csv').then( function(dataActionDistribution) {
 
-            d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/TimePlayed.csv').then( function(dataTimePlayed) {
-                
-                d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/ActionDistribution.csv').then( function(dataActionDistribution) {
+                d3.csv('./Data/' + (setCode.substring(0, setCode.indexOf('_', setCode.indexOf('_') + 1))).replace(/_/g,'/') + '/AllEvents.csv').then( function(dataAllEvents) {
 
-                    console.log('./Data/' + (setCode.substring(0, setCode.indexOf('_', setCode.indexOf('_') + 1))).replace(/_/g,'/') + '/AllEvents.csv')
+                    d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilities.csv').then( function(dataDestinationProbabilitiesFor) {
 
-                    d3.csv('./Data/' + (setCode.substring(0, setCode.indexOf('_', setCode.indexOf('_') + 1))).replace(/_/g,'/') + '/AllEvents.csv').then( function(dataAllEvents) {
+                        d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilitiesPass.csv').then( function(dataDestinationProbabilitiesPassFor) {
 
-                        d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilities.csv').then( function(dataDestinationProbabilitiesFor) {
+                            d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilitiesRun.csv').then( function(dataDestinationProbabilitiesRunFor) {
 
-                            d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilitiesPass.csv').then( function(dataDestinationProbabilitiesPassFor) {
+                                d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilities.csv').then( function(dataOriginProbabilitiesFor) {
 
-                                d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilitiesRun.csv').then( function(dataDestinationProbabilitiesRunFor) {
+                                    d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesPass.csv').then( function(dataOriginProbabilitiesPassFor) {
 
-                                    d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilities.csv').then( function(dataOriginProbabilitiesFor) {
+                                        d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesRun.csv').then( function(dataOriginProbabilitiesRunFor) {
 
-                                        d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesPass.csv').then( function(dataOriginProbabilitiesPassFor) {
-
-                                            d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesRun.csv').then( function(dataOriginProbabilitiesRunFor) {
-
-                                                d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesShot.csv').then( function(dataOriginProbabilitiesShotFor) {
+                                            d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesShot.csv').then( function(dataOriginProbabilitiesShotFor) {
+                                                
+                                                d3.csv('./Data/' + cWhatScaleToUse.replace(/_/g,'/') + 'DistributionScale.csv').then( function(dataDistributionScale) {
+                                                
+                                                    d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'OriginScale.csv').then( function(dataOriginScale) {
                                                     
-                                                    d3.csv('./Data/' + cWhatScaleToUse.replace(/_/g,'/') + 'DistributionScale.csv').then( function(dataDistributionScale) {
-                                                    
-                                                        d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'OriginScale.csv').then( function(dataOriginScale) {
-                                                        
-                                                            d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'DestinationScale.csv').then( function(dataDestinationScale) {
+                                                        d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'DestinationScale.csv').then( function(dataDestinationScale) {
 
-                                                                d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'GranularScale.csv').then( function(dataGranularDestinationScale) {
+                                                            d3.csv('./Data/' + whichColourScale.replace(/_/g,'/') + 'GranularScale.csv').then( function(dataGranularDestinationScale) {
 
-                                                                    svgLoading.remove()
+                                                                svgLoading.remove()
 
-                                                                    dataTimePlayed = dataTimePlayed[0]['TimePlayed']
+                                                                dataTimePlayed = dataTimePlayed[0]['TimePlayed']
 
-                                                                    dataGranularDestinationScale.forEach(
-                                                                        function(d){ 
-                                                                            d["WeightedExpectedGoals"] = +d["WeightedExpectedGoals"]; 
-                                                                            d["GoalProbability"] = +d["GoalProbability"]; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataOriginScale.forEach(
-                                                                        function(d){ 
-                                                                            d["_WeightedExpectedGoals"] = +d["_WeightedExpectedGoals"]; 
-                                                                            d["_GoalProbability"] = +d["_GoalProbability"]; 
-                                                                            d["NonShot_WeightedExpectedGoals"] = +d["NonShot_WeightedExpectedGoals"]; 
-                                                                            d["NonShot_GoalProbability"] = +d["NonShot_GoalProbability"]; 
-                                                                            d["Shot_WeightedExpectedGoals"] = +d["Shot_WeightedExpectedGoals"]; 
-                                                                            d["Shot_GoalProbability"] = +d["Shot_GoalProbability"]; 
-                                                                        }
-                                                                    );   
-                                                                        
-                                                                    dataDestinationScale.forEach(
-                                                                        function(d){ 
-                                                                            d["_WeightedExpectedGoals"] = +d["_WeightedExpectedGoals"]; 
-                                                                            d["_GoalProbability"] = +d["_GoalProbability"]; 
-                                                                            d["NonShot_WeightedExpectedGoals"] = +d["NonShot_WeightedExpectedGoals"]; 
-                                                                            d["NonShot_GoalProbability"] = +d["NonShot_GoalProbability"]; 
-                                                                            d["Shot_WeightedExpectedGoals"] = +d["Shot_WeightedExpectedGoals"]; 
-                                                                            d["Shot_GoalProbability"] = +d["Shot_GoalProbability"]; 
-                                                                        }
-                                                                    );   
-                                                                        
-
-                                                                    dataOriginProbabilitiesShotFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataOriginProbabilitiesShotFor = dataOriginProbabilitiesShotFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-                                                                        
-
-                                                                    dataDestinationProbabilitiesPassFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataDestinationProbabilitiesPassFor = dataDestinationProbabilitiesPassFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-                                                                        
-
-                                                                    dataDestinationProbabilitiesRunFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataDestinationProbabilitiesRunFor = dataDestinationProbabilitiesRunFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-
-                                                                    dataDestinationProbabilitiesFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataDestinationProbabilitiesFor = dataDestinationProbabilitiesFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-                                                                        
-
-                                                                    dataOriginProbabilitiesPassFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataOriginProbabilitiesPassFor = dataOriginProbabilitiesPassFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-                                                                        
-
-                                                                    dataOriginProbabilitiesRunFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataOriginProbabilitiesRunFor = dataOriginProbabilitiesRunFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-
-                                                                    dataOriginProbabilitiesFor.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            // d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataOriginProbabilitiesFor = dataOriginProbabilitiesFor.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-                                                                        
-
-                                                                    dataAllEvents.forEach(
-                                                                        function(d){ 
-                                                                            d['x'] = +d['x']; 
-                                                                            d['y'] = +d['y']; 
-                                                                            d['endX'] = +d['endX']; 
-                                                                            d['endY'] = +d['endY']; 
-                                                                            // d['Count'] = +d['Count']; 
-                                                                            // d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            // d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                            d['eventSequence'] = +d['eventSequence']; 
-                                                                        }
-                                                                    );   
-        
-                                                                    dataActionDistribution.forEach(
-                                                                        function(d){ 
-                                                                            // d['x'] = +d['x']; 
-                                                                            // d['y'] = +d['y']; 
-                                                                            // d['endX'] = +d['endX']; 
-                                                                            // d['endY'] = +d['endY']; 
-                                                                            d['Count'] = +d['Count']; 
-                                                                            d['WeightedCount'] = +d['WeightedCount']; 
-                                                                            // d['Goals'] = +d['Goals']; 
-                                                                            d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
-                                                                            d['GoalProbability'] = +d['GoalProbability']; 
-                                                                        }
-                                                                    );   
-
-                                                                    dataActionDistribution = dataActionDistribution.filter(
-                                                                        function(d) { return d.Count > CountCutoff; }
-                                                                    )
-
-                                                                    // local functions
-                                                                    if ( true ) {
-
-
-                                                                        var colorScales = {}
-
-                                                                        // Build color scale
-                                                                        colorScales["myGranularNonShotProbabilityColor"] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    colorPalette[0]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    dataGranularDestinationScale[0]['GoalProbability']
-                                                                                ]
-                                                                            )
-
-                                                                        // Build color scale
-                                                                        colorScales["myGranularNonShotGoalsColor"] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#f781bf"
-                                                                                    colorPalette[1]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    dataGranularDestinationScale[0]['WeightedExpectedGoals']
-                                                                                ]
-                                                                            )
-
-                                                                    
-                                                                        // Build color scale
-                                                                        colorScales["myShotProbabilityColor"] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#00003F",
-                                                                                    // "#00007F",
-                                                                                    colorPalette[2]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // nMaxShotProbability / 64,
-                                                                                    // nMaxShotProbability / 16,
-                                                                                    // nMaxShotProbability / 4,
-                                                                                    // nMaxShotProbability
-                                                                                    dataOriginScale[0]['Shot_GoalProbability']
-                                                                                ]
-                                                                            )
-                                                                            // .range(["#ffffff", "#FF0000"])
-                                                                            // .domain([0,1])
-
-
-                                                                        // Build color scale
-                                                                        colorScales['myShotGoalsColor'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#00003F",
-                                                                                    // "#00007F",
-                                                                                    colorPalette[3]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // nMaxNonShotProbability / 64,
-                                                                                    // nMaxNonShotProbability / 16,
-                                                                                    // nMaxNonShotProbability / 4,
-                                                                                    // nMaxShotGoals
-                                                                                    dataOriginScale[0]['Shot_WeightedExpectedGoals']
-                                                                                ]
-                                                                            )
-                                                                            // .range(["#ffffff", "#FF0000"])
-                                                                            // .domain([0,1])
-
-                                                                        colorScales['myNonShotProbabilityColorOrigin'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#3F0000",
-                                                                                    // "#7F0000",
-                                                                                    colorPalette[4]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // nMaxNonShotGoals / 64,
-                                                                                    // nMaxNonShotGoals / 16,
-                                                                                    // nMaxNonShotGoals / 4,
-                                                                                    // nMaxNonShotProbability
-                                                                                    dataOriginScale[0]['NonShot_GoalProbability']
-                                                                                ]
-                                                                            )
-
-
-                                                                        colorScales['myNonShotGoalsColorOrigin'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#3F0000",
-                                                                                    // "#7F0000",
-                                                                                    colorPalette[5]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // nMaxNonShotGoals / 64,
-                                                                                    // nMaxNonShotGoals / 16,
-                                                                                    // nMaxNonShotGoals / 4,
-                                                                                    // nMaxNonShotGoals
-                                                                                    dataOriginScale[0]['NonShot_WeightedExpectedGoals']
-                                                                                ]
-                                                                            )
-
-
-                                                                        // Build color scale
-                                                                        colorScales['myProbabilityColorOrigin'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    colorPalette[6]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // d3.max(
-                                                                                    //     [
-                                                                                    //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.GoalProbability } )
-                                                                                    //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.GoalProbability } )
-                                                                                    //     ]
-                                                                                    // )
-                                                                                    dataOriginScale[0]['_GoalProbability']
-                                                                                ]
-                                                                            )
-                                                                            // .range(["#ffffff", "#FF0000"])
-                                                                            // .domain([0,1])
-
-                                                                        // Build color scale
-                                                                        colorScales['myGoalsColorOrigin'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    colorPalette[7]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // d3.max(
-                                                                                    //     [
-                                                                                    //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.WeightedExpectedGoals } )
-                                                                                    //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.WeightedExpectedGoals } )
-                                                                                    //     ]
-                                                                                    // )
-                                                                                    dataOriginScale[0]['_WeightedExpectedGoals']
-                                                                                ]
-                                                                            )
-                                                                            // .range(["#ffffff", "#FF0000"])
-                                                                            // .domain([0,1])
-
-
-
-                                                                        colorScales['myNonShotProbabilityColorDestination'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#3F0000",
-                                                                                    // "#7F0000",
-                                                                                    colorPalette[4]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // nMaxNonShotGoals / 64,
-                                                                                    // nMaxNonShotGoals / 16,
-                                                                                    // nMaxNonShotGoals / 4,
-                                                                                    // nMaxNonShotProbability
-                                                                                    dataDestinationScale[0]['NonShot_GoalProbability']
-                                                                                ]
-                                                                            )
-
-
-                                                                        colorScales['myNonShotGoalsColorDestination'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    // "#3F0000",
-                                                                                    // "#7F0000",
-                                                                                    colorPalette[5]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // nMaxNonShotGoals / 64,
-                                                                                    // nMaxNonShotGoals / 16,
-                                                                                    // nMaxNonShotGoals / 4,
-                                                                                    // nMaxNonShotGoals
-                                                                                    dataDestinationScale[0]['NonShot_WeightedExpectedGoals']
-                                                                                ]
-                                                                            )
-
-
-                                                                        // Build color scale
-                                                                        colorScales['myProbabilityColorDestination'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    colorPalette[6]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // d3.max(
-                                                                                    //     [
-                                                                                    //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.GoalProbability } )
-                                                                                    //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.GoalProbability } )
-                                                                                    //     ]
-                                                                                    // )
-                                                                                    dataDestinationScale[0]['_GoalProbability']
-                                                                                ]
-                                                                            )
-                                                                            // .range(["#ffffff", "#FF0000"])
-                                                                            // .domain([0,1])
-
-                                                                        // Build color scale
-                                                                        colorScales['myGoalsColorDestination'] = d3.scaleLinear()
-                                                                            .range(
-                                                                                [
-                                                                                    zeroColour, 
-                                                                                    colorPalette[7]
-                                                                                ]
-                                                                            )
-                                                                            .domain(
-                                                                                [
-                                                                                    0,
-                                                                                    // d3.max(
-                                                                                    //     [
-                                                                                    //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.WeightedExpectedGoals } )
-                                                                                    //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.WeightedExpectedGoals } )
-                                                                                    //     ]
-                                                                                    // )
-                                                                                    dataDestinationScale[0]['_WeightedExpectedGoals']
-                                                                                ]
-                                                                            )
-                                                                            // .range(["#ffffff", "#FF0000"])
-                                                                            // .domain([0,1])
-
-
+                                                                dataGranularDestinationScale.forEach(
+                                                                    function(d){ 
+                                                                        d["WeightedExpectedGoals"] = +d["WeightedExpectedGoals"]; 
+                                                                        d["GoalProbability"] = +d["GoalProbability"]; 
                                                                     }
+                                                                );   
 
+                                                                dataOriginScale.forEach(
+                                                                    function(d){ 
+                                                                        d["_WeightedExpectedGoals"] = +d["_WeightedExpectedGoals"]; 
+                                                                        d["_GoalProbability"] = +d["_GoalProbability"]; 
+                                                                        d["NonShot_WeightedExpectedGoals"] = +d["NonShot_WeightedExpectedGoals"]; 
+                                                                        d["NonShot_GoalProbability"] = +d["NonShot_GoalProbability"]; 
+                                                                        d["Shot_WeightedExpectedGoals"] = +d["Shot_WeightedExpectedGoals"]; 
+                                                                        d["Shot_GoalProbability"] = +d["Shot_GoalProbability"]; 
+                                                                    }
+                                                                );   
                                                                     
+                                                                dataDestinationScale.forEach(
+                                                                    function(d){ 
+                                                                        d["_WeightedExpectedGoals"] = +d["_WeightedExpectedGoals"]; 
+                                                                        d["_GoalProbability"] = +d["_GoalProbability"]; 
+                                                                        d["NonShot_WeightedExpectedGoals"] = +d["NonShot_WeightedExpectedGoals"]; 
+                                                                        d["NonShot_GoalProbability"] = +d["NonShot_GoalProbability"]; 
+                                                                        d["Shot_WeightedExpectedGoals"] = +d["Shot_WeightedExpectedGoals"]; 
+                                                                        d["Shot_GoalProbability"] = +d["Shot_GoalProbability"]; 
+                                                                    }
+                                                                );   
                                                                     
-                                                                    var cContentPanel3Id = cDashboardPanelId + "Panel3"
-                                                                    d3.select('#' + cContentPanel3Id).selectAll('*').remove()
 
-                                                                    fCreatePanel3(
-                                                                        cContentPanel3Id,
-                                                                        dataAllEvents,
-                                                                        dataOriginProbabilitiesFor,
-                                                                        dataOriginProbabilitiesShotFor,
-                                                                        dataOriginProbabilitiesPassFor,
-                                                                        dataOriginProbabilitiesRunFor,
-                                                                        dataDestinationProbabilitiesFor,
-                                                                        dataDestinationProbabilitiesPassFor,
-                                                                        dataDestinationProbabilitiesRunFor,
-                                                                        dataDistributionScale,
-                                                                        colorScales,
-                                                                        setCode,
-                                                                        selectedSetName,
-                                                                        nTwoDimSearchRadius,
-                                                                        PositionsToInclude,
-                                                                        dataActionDistribution,
-                                                                        typeOfDataset,
-                                                                        dataTimePlayed
-                                                                    )
+                                                                dataOriginProbabilitiesShotFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataOriginProbabilitiesShotFor = dataOriginProbabilitiesShotFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+                                                                    
+
+                                                                dataDestinationProbabilitiesPassFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataDestinationProbabilitiesPassFor = dataDestinationProbabilitiesPassFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+                                                                    
+
+                                                                dataDestinationProbabilitiesRunFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataDestinationProbabilitiesRunFor = dataDestinationProbabilitiesRunFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+
+                                                                dataDestinationProbabilitiesFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataDestinationProbabilitiesFor = dataDestinationProbabilitiesFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+                                                                    
+
+                                                                dataOriginProbabilitiesPassFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataOriginProbabilitiesPassFor = dataOriginProbabilitiesPassFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+                                                                    
+
+                                                                dataOriginProbabilitiesRunFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataOriginProbabilitiesRunFor = dataOriginProbabilitiesRunFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+
+                                                                dataOriginProbabilitiesFor.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        // d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        // d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+
+                                                                dataOriginProbabilitiesFor = dataOriginProbabilitiesFor.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+                                                                    
+
+                                                                dataAllEvents.forEach(
+                                                                    function(d){ 
+                                                                        d['x'] = +d['x']; 
+                                                                        d['y'] = +d['y']; 
+                                                                        d['endX'] = +d['endX']; 
+                                                                        d['endY'] = +d['endY']; 
+                                                                        // d['Count'] = +d['Count']; 
+                                                                        // d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        // d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        d['MaxPossessionGoalProbabilty'] = +d['MaxPossessionGoalProbabilty']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                        d['eventSequence'] = +d['eventSequence']; 
+                                                                    }
+                                                                );   
+    
+                                                                dataActionDistribution.forEach(
+                                                                    function(d){ 
+                                                                        // d['x'] = +d['x']; 
+                                                                        // d['y'] = +d['y']; 
+                                                                        // d['endX'] = +d['endX']; 
+                                                                        // d['endY'] = +d['endY']; 
+                                                                        d['Count'] = +d['Count']; 
+                                                                        d['WeightedCount'] = +d['WeightedCount']; 
+                                                                        // d['Goals'] = +d['Goals']; 
+                                                                        d['WeightedExpectedGoals'] = +d['WeightedExpectedGoals']; 
+                                                                        d['GoalProbability'] = +d['GoalProbability']; 
+                                                                    }
+                                                                );   
+
+                                                                dataActionDistribution = dataActionDistribution.filter(
+                                                                    function(d) { return d.Count > CountCutoff; }
+                                                                )
+
+                                                                // local functions
+                                                                if ( true ) {
 
 
-                                                                    highlightedEventsDiv
-                                                                        .on("click", function() { 
-                                                                            
-                                                                            d3.select('#HelpOverlay').remove();
-                                                                            d3.select('#pitchElementPlaysBackground').remove()
-                                                                            d3.select('#pitchElementPlays').remove()
+                                                                    var colorScales = {}
 
-                                                                            if ( d3.select('#HighlightedEventsPanel').empty() ) {
+                                                                    // Build color scale
+                                                                    colorScales["myGranularNonShotProbabilityColor"] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                colorPalette[0]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                dataGranularDestinationScale[0]['GoalProbability']
+                                                                            ]
+                                                                        )
 
-                                                                                var HighlightedEventsPanel = d3.selectAll('#svgPanel3')
-                                                                                    .append('g')
-                                                                                    .attr('id', 'HighlightedEventsPanel')
+                                                                    // Build color scale
+                                                                    colorScales["myGranularNonShotGoalsColor"] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#f781bf"
+                                                                                colorPalette[1]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                dataGranularDestinationScale[0]['WeightedExpectedGoals']
+                                                                            ]
+                                                                        )
 
-                                                                                HighlightedEventsPanel
-                                                                                    .append('rect')
-                                                                                    .attr('x', 0)
-                                                                                    .attr('y', 0)
-                                                                                    .attr('height', d3.selectAll('#svgPanel3').style('height'))
-                                                                                    .attr('width', d3.selectAll('#svgPanel3').style('width'))
-                                                                                    .attr('fill','black')
-                                                                                    .attr('opacity', 1)
+                                                                
+                                                                    // Build color scale
+                                                                    colorScales["myShotProbabilityColor"] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#00003F",
+                                                                                // "#00007F",
+                                                                                colorPalette[2]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // nMaxShotProbability / 64,
+                                                                                // nMaxShotProbability / 16,
+                                                                                // nMaxShotProbability / 4,
+                                                                                // nMaxShotProbability
+                                                                                dataOriginScale[0]['Shot_GoalProbability']
+                                                                            ]
+                                                                        )
+                                                                        // .range(["#ffffff", "#FF0000"])
+                                                                        // .domain([0,1])
 
 
-                                                                                pitchElementHighlightedEvents = []
-                                                                                pitchElementHighlightedEventsMarkings = []
+                                                                    // Build color scale
+                                                                    colorScales['myShotGoalsColor'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#00003F",
+                                                                                // "#00007F",
+                                                                                colorPalette[3]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // nMaxNonShotProbability / 64,
+                                                                                // nMaxNonShotProbability / 16,
+                                                                                // nMaxNonShotProbability / 4,
+                                                                                // nMaxShotGoals
+                                                                                dataOriginScale[0]['Shot_WeightedExpectedGoals']
+                                                                            ]
+                                                                        )
+                                                                        // .range(["#ffffff", "#FF0000"])
+                                                                        // .domain([0,1])
 
+                                                                    colorScales['myNonShotProbabilityColorOrigin'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#3F0000",
+                                                                                // "#7F0000",
+                                                                                colorPalette[4]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // nMaxNonShotGoals / 64,
+                                                                                // nMaxNonShotGoals / 16,
+                                                                                // nMaxNonShotGoals / 4,
+                                                                                // nMaxNonShotProbability
+                                                                                dataOriginScale[0]['NonShot_GoalProbability']
+                                                                            ]
+                                                                        )
+
+
+                                                                    colorScales['myNonShotGoalsColorOrigin'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#3F0000",
+                                                                                // "#7F0000",
+                                                                                colorPalette[5]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // nMaxNonShotGoals / 64,
+                                                                                // nMaxNonShotGoals / 16,
+                                                                                // nMaxNonShotGoals / 4,
+                                                                                // nMaxNonShotGoals
+                                                                                dataOriginScale[0]['NonShot_WeightedExpectedGoals']
+                                                                            ]
+                                                                        )
+
+
+                                                                    // Build color scale
+                                                                    colorScales['myProbabilityColorOrigin'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                colorPalette[6]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // d3.max(
+                                                                                //     [
+                                                                                //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.GoalProbability } )
+                                                                                //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.GoalProbability } )
+                                                                                //     ]
+                                                                                // )
+                                                                                dataOriginScale[0]['_GoalProbability']
+                                                                            ]
+                                                                        )
+                                                                        // .range(["#ffffff", "#FF0000"])
+                                                                        // .domain([0,1])
+
+                                                                    // Build color scale
+                                                                    colorScales['myGoalsColorOrigin'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                colorPalette[7]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // d3.max(
+                                                                                //     [
+                                                                                //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.WeightedExpectedGoals } )
+                                                                                //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.WeightedExpectedGoals } )
+                                                                                //     ]
+                                                                                // )
+                                                                                dataOriginScale[0]['_WeightedExpectedGoals']
+                                                                            ]
+                                                                        )
+                                                                        // .range(["#ffffff", "#FF0000"])
+                                                                        // .domain([0,1])
+
+
+
+                                                                    colorScales['myNonShotProbabilityColorDestination'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#3F0000",
+                                                                                // "#7F0000",
+                                                                                colorPalette[4]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // nMaxNonShotGoals / 64,
+                                                                                // nMaxNonShotGoals / 16,
+                                                                                // nMaxNonShotGoals / 4,
+                                                                                // nMaxNonShotProbability
+                                                                                dataDestinationScale[0]['NonShot_GoalProbability']
+                                                                            ]
+                                                                        )
+
+
+                                                                    colorScales['myNonShotGoalsColorDestination'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                // "#3F0000",
+                                                                                // "#7F0000",
+                                                                                colorPalette[5]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // nMaxNonShotGoals / 64,
+                                                                                // nMaxNonShotGoals / 16,
+                                                                                // nMaxNonShotGoals / 4,
+                                                                                // nMaxNonShotGoals
+                                                                                dataDestinationScale[0]['NonShot_WeightedExpectedGoals']
+                                                                            ]
+                                                                        )
+
+
+                                                                    // Build color scale
+                                                                    colorScales['myProbabilityColorDestination'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                colorPalette[6]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // d3.max(
+                                                                                //     [
+                                                                                //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.GoalProbability } )
+                                                                                //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.GoalProbability } )
+                                                                                //     ]
+                                                                                // )
+                                                                                dataDestinationScale[0]['_GoalProbability']
+                                                                            ]
+                                                                        )
+                                                                        // .range(["#ffffff", "#FF0000"])
+                                                                        // .domain([0,1])
+
+                                                                    // Build color scale
+                                                                    colorScales['myGoalsColorDestination'] = d3.scaleLinear()
+                                                                        .range(
+                                                                            [
+                                                                                zeroColour, 
+                                                                                colorPalette[7]
+                                                                            ]
+                                                                        )
+                                                                        .domain(
+                                                                            [
+                                                                                0,
+                                                                                // d3.max(
+                                                                                //     [
+                                                                                //         d3.max(dataOriginProbabilitiesFor, function (d) { return d.WeightedExpectedGoals } )
+                                                                                //         // d3.max(dataOriginProbabilitiesAgainst, function (d) { return d.WeightedExpectedGoals } )
+                                                                                //     ]
+                                                                                // )
+                                                                                dataDestinationScale[0]['_WeightedExpectedGoals']
+                                                                            ]
+                                                                        )
+                                                                        // .range(["#ffffff", "#FF0000"])
+                                                                        // .domain([0,1])
+
+
+                                                                }
+
+                                                                
+                                                                
+                                                                var cContentPanel3Id = cDashboardPanelId + "Panel3"
+                                                                d3.select('#' + cContentPanel3Id).selectAll('*').remove()
+
+                                                                fCreatePanel3(
+                                                                    cContentPanel3Id,
+                                                                    dataAllEvents,
+                                                                    dataOriginProbabilitiesFor,
+                                                                    dataOriginProbabilitiesShotFor,
+                                                                    dataOriginProbabilitiesPassFor,
+                                                                    dataOriginProbabilitiesRunFor,
+                                                                    dataDestinationProbabilitiesFor,
+                                                                    dataDestinationProbabilitiesPassFor,
+                                                                    dataDestinationProbabilitiesRunFor,
+                                                                    dataDistributionScale,
+                                                                    colorScales,
+                                                                    setCode,
+                                                                    selectedSetName,
+                                                                    nTwoDimSearchRadius,
+                                                                    PositionsToInclude,
+                                                                    dataActionDistribution,
+                                                                    typeOfDataset,
+                                                                    dataTimePlayed
+                                                                )
+
+
+                                                                highlightedEventsDiv
+                                                                    .on("click", function() { 
+                                                                        
+                                                                        d3.select('#HelpOverlay').remove();
+                                                                        d3.select('#pitchElementPlaysBackground').remove()
+                                                                        d3.select('#pitchElementPlays').remove()
+
+                                                                        if ( d3.select('#HighlightedEventsPanel').empty() ) {
+
+                                                                            var HighlightedEventsPanel = d3.selectAll('#svgPanel3')
+                                                                                .append('g')
+                                                                                .attr('id', 'HighlightedEventsPanel')
+
+                                                                            HighlightedEventsPanel
+                                                                                .append('rect')
+                                                                                .attr('x', 0)
+                                                                                .attr('y', 0)
+                                                                                .attr('height', d3.selectAll('#svgPanel3').style('height'))
+                                                                                .attr('width', d3.selectAll('#svgPanel3').style('width'))
+                                                                                .attr('fill','black')
+                                                                                .attr('opacity', 1)
+
+
+                                                                            pitchElementHighlightedEvents = []
+                                                                            pitchElementHighlightedEventsMarkings = []
+
+                                                                            // for (var j=0; j<iPlotsHighlightedEventsInARow; j++) {
+                                                                            for (var index=0; index<iPlotsHighlightedEventsInARow*iPlotsHighlightedEventsInAColumn; index++) {
+                                                                            // for (var index=0; index<dataHighlightedEvents.length; index++) {
+
+                                                                                var i = Math.floor(index/iPlotsHighlightedEventsInARow);
+                                                                                var j = index - ( i * iPlotsHighlightedEventsInARow );
+
+                                                                                pitchElementHighlightedEvents[index] = HighlightedEventsPanel
+                                                                                    .append("g")
+                                                                                    .attr(
+                                                                                        "transform", 
+                                                                                        "translate(" + 
+                                                                                            xScale6( ( 0 ) + ( j * ( pitch.padding.left + pitch.frame.width ) ) ) + "," + 
+                                                                                            xScale6( ( 30 ) + ( i * ( pitch.padding.top + pitch.frame.length ) ) ) + 
+                                                                                        ")"
+                                                                                    )
+                                                                                    
+
+                                                                                addPitchColor(
+                                                                                    pitchElementHighlightedEvents[index],
+                                                                                    xScale6
+                                                                                )
+                                                                                    
+                                                                                pitchElementHighlightedEventsMarkings[index] = pitchElementHighlightedEvents[index]
+                                                                                    .append("g")
+                                                                                    .attr('class','pitchMarkings');
+
+                                                                                addPitchOutlines(
+                                                                                    pitchElementHighlightedEventsMarkings[index],
+                                                                                    xScale6
+                                                                                )
+
+                                                                                pitchElementHighlightedEvents[index]
+                                                                                    .on('click', function(d) {
+
+                                                                                        d3.select('#HighlightedEventsPanel').remove()
+
+                                                                                        highlightedEventsDiv
+                                                                                            .text('Show top moves')
+
+                                                                                        d3.selectAll('#svgPanel3').selectAll(".histogramindicators").remove()
+                                                                                        d3.selectAll('#svgPanel3').selectAll(".histogramindicatorsshot").remove()
+
+                                                                                        restoreBaseOriginData(
+                                                                                            d3.selectAll('#svgPanel3').selectAll('#pitchElementOriginPanel3'),
+                                                                                            d3.selectAll('#svgPanel3').selectAll('#pitchElementOriginCumulativePanel3')
+                                                                                        )
+
+                                                                                        Panel3Click = {}
+                                                                                        Panel3Click['x'] = d.x
+                                                                                        Panel3Click['y'] = d.y
+                                                                                        Panel3Click['event'] = d.event                            
+                                                                                        selectedSetCode = dropdownSetDashboard.property("value")
+
+                                                                                        updatePositionsToIncludeScale(selectedSetCode)                      
+
+                                                                                        Panel3Click['PlayPanelOpen'] = false
+                                                                                        
+                                                                                        updatePanel3HighlightsForOriginHovers(
+                                                                                            Panel3Click['x'],
+                                                                                            Panel3Click['y'],
+                                                                                            d3.selectAll('#pitchElementOriginPanel3'),
+                                                                                            d3.selectAll('#pitchElementOriginCumulativePanel3'),
+                                                                                            d3.selectAll('#pitchElementShotPanel3'),
+                                                                                            d3.selectAll('#pitchElementShotCumulativePanel3'),
+                                                                                            d3.selectAll('#pitchElementPassPanel3'),
+                                                                                            d3.selectAll('#pitchElementPassCumulativePanel3'),
+                                                                                            d3.selectAll('#pitchElementRunPanel3'),
+                                                                                            d3.selectAll('#pitchElementRunCumulativePanel3'),
+                                                                                            cContentPanelId,
+                                                                                            xScale3,
+                                                                                            yScale3,
+                                                                                            Panel3Click
+                                                                                        )
+                                                                                        
+
+                                                                                        updatePanel3ForOriginHover(
+                                                                                            selectedSetCode,
+                                                                                            Panel3Click['x'],
+                                                                                            Panel3Click['y'],
+                                                                                            d3.selectAll('#pitchElementOriginPanel3'),
+                                                                                            d3.selectAll('#pitchElementOriginCumulativePanel3'),
+                                                                                            d3.selectAll('#pitchElementShotPanel3'),
+                                                                                            d3.selectAll('#pitchElementShotCumulativePanel3'),
+                                                                                            d3.selectAll('#pitchElementPassPanel3'),
+                                                                                            d3.selectAll('#pitchElementPassCumulativePanel3'),
+                                                                                            d3.selectAll('#pitchElementRunPanel3'),
+                                                                                            d3.selectAll('#pitchElementRunCumulativePanel3'),
+                                                                                            colorScales,
+                                                                                            cContentPanelId,
+                                                                                            xScale3,
+                                                                                            yScale3,
+                                                                                            dataAllEvents,
+                                                                                            nTwoDimSearchRadius,
+                                                                                            nOneDimSearchRadius,
+                                                                                            dataOriginProbabilitiesFor,
+                                                                                            dataOriginProbabilitiesShotFor,
+                                                                                            dataOriginProbabilitiesPassFor,
+                                                                                            dataOriginProbabilitiesRunFor,
+                                                                                            d3.selectAll('#svgPanel3'),
+                                                                                            PositionsToInclude,
+                                                                                            histogramProbabilityTotalScaleGoalProbability, 
+                                                                                            histogramProbabilityTotalScaleWeightedExpectedGoals,
+                                                                                            CountCutoff,
+                                                                                            dataTimePlayed
+                                                                                        ).then(
+                                                                                        
+                                                                                            function () {
+
+                                                                                                
+                                                                                                d3.selectAll('.highlightOrigin')
+                                                                                                    .style(
+                                                                                                        "stroke-width",
+                                                                                                        '2px'
+                                                                                                    )
+                                                                                                    
+                                                                                                Panel3Click['PlayPanelOpen'] = true
+
+                                                                                                if ( Panel3Click['event'] != 'Shot' ) {
+
+                                                                                                    Panel3Click['endX'] = d.endX
+                                                                                                    Panel3Click['endY'] = d.endY
+                                                                                                                                        
+
+                                                                                                    d3.selectAll('.highlightDestination')
+                                                                                                        .style(
+                                                                                                            "stroke-width",
+                                                                                                            '2px'
+                                                                                                        )     
+                                                                                                    
+                                                                                                        updatePanel3HighlightsForDestinationHovers(
+                                                                                                            Panel3Click['endX'],
+                                                                                                            Panel3Click['endY'],
+                                                                                                            cContentPanelId,
+                                                                                                            d3.selectAll('#pitchElementOriginPanel3'),
+                                                                                                            d3.selectAll('#pitchElementOriginCumulativePanel3'),
+                                                                                                            d3.selectAll('#pitchElementPassPanel3'),
+                                                                                                            d3.selectAll('#pitchElementPassCumulativePanel3'),
+                                                                                                            d3.selectAll('#pitchElementRunPanel3'),
+                                                                                                            d3.selectAll('#pitchElementRunCumulativePanel3'),
+                                                                                                            xScale3,
+                                                                                                            yScale3,
+                                                                                                            d3.selectAll('#svgPanel3')
+                                                                                                        )
+                                                                                                }
+                                                                                                    
+                                                                                                updatePanel3ForStartClickEndClick (
+                                                                                                    pitch,
+                                                                                                    d3.selectAll('#svgPanel3'),
+                                                                                                    dataAllEvents,
+                                                                                                    Panel3Click['event'],
+                                                                                                    Panel3Click['x'],
+                                                                                                    Panel3Click['y'],
+                                                                                                    Panel3Click['endX'],
+                                                                                                    Panel3Click['endY'],
+                                                                                                    PositionsToInclude,
+                                                                                                    cPassColour,
+                                                                                                    cRunColour,
+                                                                                                    cShotColour,
+                                                                                                    cDashboardPanelId,
+                                                                                                    nOneDimSearchRadius,
+                                                                                                    nTwoDimSearchRadius
+                                                                                                )
+                                                                                            
+                                                                                                if ( Panel3Click['event'] != 'Shot' ) {
+
+                                                                                                    classstring = ".histogramindicators." + 
+                                                                                                        Panel3Click['event'] + 
+                                                                                                        '.x' + Panel3Click['x'] + '_y' + Panel3Click['y'] +
+                                                                                                        '.endX' + Panel3Click['endX'] + "_endY" + Panel3Click['endY']
+
+                                                                                                    d3.selectAll('#svgPanel3').selectAll(
+                                                                                                        classstring
+                                                                                                    )
+                                                                                                        // .attr('opacity', 1)
+                                                                                                        .attr("stroke-opacity", 1)
+                                                                                                        .attr("stroke-width", 4)
+                                                                                                        .attr("fill", 'white')
+                                                                                                        .attr("stroke", 'black')
+                                                                                                        .attr("r", 8)
+                                                                                                        .moveToFront()
+
+                                                                                                
+                                                                                                }
+
+                                                                                            }
+
+                                                                                        )
+                                                                                            
+                                                                                    })
+
+                                                                                pitchElementHighlightedEventsMarkings[index].moveToFront()  
+
+                                                                        
+                                                                            }
+
+
+                                                                            selectedSetCode = dropdownSetDashboard.property("value")
+
+                                                                            d3.csv(
+                                                                                './Data/' + selectedSetCode.replace(/_/g,'/') + '/HighlightedEvents.csv').then( function(dataActionDistribution) {
+                                                                                    
                                                                                 // for (var j=0; j<iPlotsHighlightedEventsInARow; j++) {
-                                                                                for (var index=0; index<iPlotsHighlightedEventsInARow*iPlotsHighlightedEventsInAColumn; index++) {
-                                                                                // for (var index=0; index<dataHighlightedEvents.length; index++) {
+                                                                                for (var index=0; index<dataActionDistribution.length; index++) {
 
                                                                                     var i = Math.floor(index/iPlotsHighlightedEventsInARow);
                                                                                     var j = index - ( i * iPlotsHighlightedEventsInARow );
 
-                                                                                    pitchElementHighlightedEvents[index] = HighlightedEventsPanel
-                                                                                        .append("g")
-                                                                                        .attr(
-                                                                                            "transform", 
-                                                                                            "translate(" + 
-                                                                                                xScale6( ( 0 ) + ( j * ( pitch.padding.left + pitch.frame.width ) ) ) + "," + 
-                                                                                                xScale6( ( 30 ) + ( i * ( pitch.padding.top + pitch.frame.length ) ) ) + 
-                                                                                            ")"
-                                                                                        )
-                                                                                        
-
-                                                                                    addPitchColor(
-                                                                                        pitchElementHighlightedEvents[index],
-                                                                                        xScale6
-                                                                                    )
-                                                                                        
-                                                                                    pitchElementHighlightedEventsMarkings[index] = pitchElementHighlightedEvents[index]
-                                                                                        .append("g")
-                                                                                        .attr('class','pitchMarkings');
-
-                                                                                    addPitchOutlines(
-                                                                                        pitchElementHighlightedEventsMarkings[index],
-                                                                                        xScale6
-                                                                                    )
-
                                                                                     pitchElementHighlightedEvents[index]
-                                                                                        .on('click', function(d) {
+                                                                                        .datum(dataActionDistribution[index])
 
-                                                                                            d3.select('#HighlightedEventsPanel').remove()
+                                                                                    addPlotTitle ( 
+                                                                                        pitchElementHighlightedEvents[index],
+                                                                                        'xPo: ' + (+dataActionDistribution[index].GoalProbability).toFixed(2) + ', ' + 
+                                                                                        'Generated p90: ' + (+dataActionDistribution[index].WeightedExpectedGoals).toFixed(2),
+                                                                                        xScale6,
+                                                                                        nBlockWidth,
+                                                                                        dataActionDistribution[index].event,
+                                                                                        cDashboardPanelId
+                                                                                    )
 
-                                                                                            highlightedEventsDiv
-                                                                                                .text('Show top moves')
-
-                                                                                            d3.selectAll('#svgPanel3').selectAll(".histogramindicators").remove()
-                                                                                            d3.selectAll('#svgPanel3').selectAll(".histogramindicatorsshot").remove()
-
-                                                                                            restoreBaseOriginData(
-                                                                                                d3.selectAll('#svgPanel3').selectAll('#pitchElementOriginPanel3'),
-                                                                                                d3.selectAll('#svgPanel3').selectAll('#pitchElementOriginCumulativePanel3')
-                                                                                            )
-
-                                                                                            Panel3Click = {}
-                                                                                            Panel3Click['x'] = d.x
-                                                                                            Panel3Click['y'] = d.y
-                                                                                            Panel3Click['event'] = d.event                            
-                                                                                            selectedSetCode = dropdownSetDashboard.property("value")
-
-                                                                                            updatePositionsToIncludeScale(selectedSetCode)                      
-
-                                                                                            Panel3Click['PlayPanelOpen'] = false
-                                                                                            
-                                                                                            updatePanel3HighlightsForOriginHovers(
-                                                                                                Panel3Click['x'],
-                                                                                                Panel3Click['y'],
-                                                                                                d3.selectAll('#pitchElementOriginPanel3'),
-                                                                                                d3.selectAll('#pitchElementOriginCumulativePanel3'),
-                                                                                                d3.selectAll('#pitchElementShotPanel3'),
-                                                                                                d3.selectAll('#pitchElementShotCumulativePanel3'),
-                                                                                                d3.selectAll('#pitchElementPassPanel3'),
-                                                                                                d3.selectAll('#pitchElementPassCumulativePanel3'),
-                                                                                                d3.selectAll('#pitchElementRunPanel3'),
-                                                                                                d3.selectAll('#pitchElementRunCumulativePanel3'),
-                                                                                                cContentPanelId,
-                                                                                                xScale3,
-                                                                                                yScale3,
-                                                                                                Panel3Click
-                                                                                            )
-                                                                                            
-
-                                                                                            updatePanel3ForOriginHover(
-                                                                                                selectedSetCode,
-                                                                                                Panel3Click['x'],
-                                                                                                Panel3Click['y'],
-                                                                                                d3.selectAll('#pitchElementOriginPanel3'),
-                                                                                                d3.selectAll('#pitchElementOriginCumulativePanel3'),
-                                                                                                d3.selectAll('#pitchElementShotPanel3'),
-                                                                                                d3.selectAll('#pitchElementShotCumulativePanel3'),
-                                                                                                d3.selectAll('#pitchElementPassPanel3'),
-                                                                                                d3.selectAll('#pitchElementPassCumulativePanel3'),
-                                                                                                d3.selectAll('#pitchElementRunPanel3'),
-                                                                                                d3.selectAll('#pitchElementRunCumulativePanel3'),
-                                                                                                colorScales,
-                                                                                                cContentPanelId,
-                                                                                                xScale3,
-                                                                                                yScale3,
-                                                                                                dataAllEvents,
-                                                                                                nTwoDimSearchRadius,
-                                                                                                nOneDimSearchRadius,
-                                                                                                dataOriginProbabilitiesFor,
-                                                                                                dataOriginProbabilitiesShotFor,
-                                                                                                dataOriginProbabilitiesPassFor,
-                                                                                                dataOriginProbabilitiesRunFor,
-                                                                                                d3.selectAll('#svgPanel3'),
-                                                                                                PositionsToInclude,
-                                                                                                histogramProbabilityTotalScaleGoalProbability, 
-                                                                                                histogramProbabilityTotalScaleWeightedExpectedGoals,
-                                                                                                CountCutoff,
-                                                                                                dataTimePlayed
-                                                                                            ).then(
-                                                                                            
-                                                                                                function () {
-
-                                                                                                    
-                                                                                                    d3.selectAll('.highlightOrigin')
-                                                                                                        .style(
-                                                                                                            "stroke-width",
-                                                                                                            '2px'
-                                                                                                        )
-                                                                                                        
-                                                                                                    Panel3Click['PlayPanelOpen'] = true
-
-                                                                                                    if ( Panel3Click['event'] != 'Shot' ) {
-
-                                                                                                        Panel3Click['endX'] = d.endX
-                                                                                                        Panel3Click['endY'] = d.endY
-                                                                                                                                            
-
-                                                                                                        d3.selectAll('.highlightDestination')
-                                                                                                            .style(
-                                                                                                                "stroke-width",
-                                                                                                                '2px'
-                                                                                                            )     
-                                                                                                        
-                                                                                                            updatePanel3HighlightsForDestinationHovers(
-                                                                                                                Panel3Click['endX'],
-                                                                                                                Panel3Click['endY'],
-                                                                                                                cContentPanelId,
-                                                                                                                d3.selectAll('#pitchElementOriginPanel3'),
-                                                                                                                d3.selectAll('#pitchElementOriginCumulativePanel3'),
-                                                                                                                d3.selectAll('#pitchElementPassPanel3'),
-                                                                                                                d3.selectAll('#pitchElementPassCumulativePanel3'),
-                                                                                                                d3.selectAll('#pitchElementRunPanel3'),
-                                                                                                                d3.selectAll('#pitchElementRunCumulativePanel3'),
-                                                                                                                xScale3,
-                                                                                                                yScale3,
-                                                                                                                d3.selectAll('#svgPanel3')
-                                                                                                            )
-                                                                                                    }
-                                                                                                        
-                                                                                                    updatePanel3ForStartClickEndClick (
-                                                                                                        pitch,
-                                                                                                        d3.selectAll('#svgPanel3'),
-                                                                                                        dataAllEvents,
-                                                                                                        Panel3Click['event'],
-                                                                                                        Panel3Click['x'],
-                                                                                                        Panel3Click['y'],
-                                                                                                        Panel3Click['endX'],
-                                                                                                        Panel3Click['endY'],
-                                                                                                        PositionsToInclude,
-                                                                                                        cPassColour,
-                                                                                                        cRunColour,
-                                                                                                        cShotColour,
-                                                                                                        cDashboardPanelId,
-                                                                                                        nOneDimSearchRadius,
-                                                                                                        nTwoDimSearchRadius
-                                                                                                    )
-                                                                                                
-                                                                                                    if ( Panel3Click['event'] != 'Shot' ) {
-
-                                                                                                        classstring = ".histogramindicators." + 
-                                                                                                            Panel3Click['event'] + 
-                                                                                                            '.x' + Panel3Click['x'] + '_y' + Panel3Click['y'] +
-                                                                                                            '.endX' + Panel3Click['endX'] + "_endY" + Panel3Click['endY']
-
-                                                                                                        d3.selectAll('#svgPanel3').selectAll(
-                                                                                                            classstring
-                                                                                                        )
-                                                                                                            // .attr('opacity', 1)
-                                                                                                            .attr("stroke-opacity", 1)
-                                                                                                            .attr("stroke-width", 4)
-                                                                                                            .attr("fill", 'white')
-                                                                                                            .attr("stroke", 'black')
-                                                                                                            .attr("r", 8)
-                                                                                                            .moveToFront()
-
-                                                                                                    
-                                                                                                    }
-
-                                                                                                }
-
-                                                                                            )
-                                                                                                
-                                                                                        })
-
-                                                                                    pitchElementHighlightedEventsMarkings[index].moveToFront()  
-
-                                                                            
-                                                                                }
-
-
-                                                                                selectedSetCode = dropdownSetDashboard.property("value")
-
-                                                                                d3.csv(
-                                                                                    './Data/' + selectedSetCode.replace(/_/g,'/') + '/HighlightedEvents.csv').then( function(dataActionDistribution) {
-                                                                                        
-                                                                                    // for (var j=0; j<iPlotsHighlightedEventsInARow; j++) {
-                                                                                    for (var index=0; index<dataActionDistribution.length; index++) {
-
-                                                                                        var i = Math.floor(index/iPlotsHighlightedEventsInARow);
-                                                                                        var j = index - ( i * iPlotsHighlightedEventsInARow );
+                                                                                    if ( dataActionDistribution[index].event == 'Shot') {
 
                                                                                         pitchElementHighlightedEvents[index]
-                                                                                            .datum(dataActionDistribution[index])
+                                                                                            .append('circle')
+                                                                                            .attr("class", 'HighlightedEvent')
+                                                                                            .style("stroke", cShotColour)
+                                                                                            .style("fill", cShotColour)
+                                                                                            .style("stroke-width", 2)
+                                                                                            .attr("cx", function (d) { return xScale6(dataActionDistribution[index].x) })
+                                                                                            .attr("cy", function (d) { return yScale6(dataActionDistribution[index].y) })
+                                                                                            .attr('r', xScale6(2))
+                                                                                            
+                                                                                    } else {
 
-                                                                                        addPlotTitle ( 
-                                                                                            pitchElementHighlightedEvents[index],
-                                                                                            'xPo: ' + (+dataActionDistribution[index].GoalProbability).toFixed(2) + ', ' + 
-                                                                                            'Generated p90: ' + (+dataActionDistribution[index].WeightedExpectedGoals).toFixed(2),
-                                                                                            xScale6,
-                                                                                            nBlockWidth,
-                                                                                            dataActionDistribution[index].event,
-                                                                                            cDashboardPanelId
-                                                                                        )
-
-                                                                                        if ( dataActionDistribution[index].event == 'Shot') {
-
-                                                                                            pitchElementHighlightedEvents[index]
-                                                                                                .append('circle')
-                                                                                                .attr("class", 'HighlightedEvent')
-                                                                                                .style("stroke", cShotColour)
-                                                                                                .style("fill", cShotColour)
-                                                                                                .style("stroke-width", 2)
-                                                                                                .attr("cx", function (d) { return xScale6(dataActionDistribution[index].x) })
-                                                                                                .attr("cy", function (d) { return yScale6(dataActionDistribution[index].y) })
-                                                                                                .attr('r', xScale6(2))
-                                                                                                
-                                                                                        } else {
-
-                                                                                            pitchElementHighlightedEvents[index]
-                                                                                                .append('line')
-                                                                                                .attr("class", 'HighlightedEvent')
-                                                                                                .style("stroke", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
-                                                                                                .style("fill", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
-                                                                                                .style("stroke-width", 2)
-                                                                                                .attr("x1", function (d) { return xScale6(dataActionDistribution[index].x) })
-                                                                                                .attr("y1", function (d) { return yScale6(dataActionDistribution[index].y) })
-                                                                                                .attr("x2", function (d) { return xScale6(dataActionDistribution[index].endX) })
-                                                                                                .attr("y2", function (d) { return yScale6(dataActionDistribution[index].endY) })
-                                                                                                
-                                                                                            pitchElementHighlightedEvents[index]
-                                                                                                .append('circle')
-                                                                                                .attr("class", 'HighlightedEvent')
-                                                                                                .style("stroke", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
-                                                                                                .style("fill", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
-                                                                                                .style("stroke-width", 2)
-                                                                                                .attr("cx", function (d) { return xScale6(dataActionDistribution[index].endX) })
-                                                                                                .attr("cy", function (d) { return yScale6(dataActionDistribution[index].endY) })
-                                                                                                .attr('r', xScale6(2))
-                                                                                                .attr(
-                                                                                                    "width", 
-                                                                                                    ( svgPanel3Width )
-                                                                                                )
-                                                                                                .attr(
-                                                                                                    "height", 
-                                                                                                    // ( 1 * xScale3(pitch.frame.length)) +
-                                                                                                    ( 3 * xScale3(pitch.frame.length))
-                                                                                                )
-                                                                                        }
-
+                                                                                        pitchElementHighlightedEvents[index]
+                                                                                            .append('line')
+                                                                                            .attr("class", 'HighlightedEvent')
+                                                                                            .style("stroke", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
+                                                                                            .style("fill", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
+                                                                                            .style("stroke-width", 2)
+                                                                                            .attr("x1", function (d) { return xScale6(dataActionDistribution[index].x) })
+                                                                                            .attr("y1", function (d) { return yScale6(dataActionDistribution[index].y) })
+                                                                                            .attr("x2", function (d) { return xScale6(dataActionDistribution[index].endX) })
+                                                                                            .attr("y2", function (d) { return yScale6(dataActionDistribution[index].endY) })
+                                                                                            
+                                                                                        pitchElementHighlightedEvents[index]
+                                                                                            .append('circle')
+                                                                                            .attr("class", 'HighlightedEvent')
+                                                                                            .style("stroke", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
+                                                                                            .style("fill", ((dataActionDistribution[index].event == 'Pass') ? cPassColour : cRunColour) )
+                                                                                            .style("stroke-width", 2)
+                                                                                            .attr("cx", function (d) { return xScale6(dataActionDistribution[index].endX) })
+                                                                                            .attr("cy", function (d) { return yScale6(dataActionDistribution[index].endY) })
+                                                                                            .attr('r', xScale6(2))
+                                                                                            .attr(
+                                                                                                "width", 
+                                                                                                ( svgPanel3Width )
+                                                                                            )
+                                                                                            .attr(
+                                                                                                "height", 
+                                                                                                // ( 1 * xScale3(pitch.frame.length)) +
+                                                                                                ( 3 * xScale3(pitch.frame.length))
+                                                                                            )
                                                                                     }
 
+                                                                                }
+
+                                                                            })
+
+
+
+                                                                            HighlightedEventsPanel
+                                                                                .append('text')
+                                                                                .text('Close')
+                                                                                .attr("fill", "white")
+                                                                                .attr("alignment-baseline", "top")
+                                                                                .attr("text-anchor", "end")
+                                                                                .attr(
+                                                                                    "x", 
+                                                                                    ( 4.1 * xScale3(pitch.frame.width) )
+                                                                                )
+                                                                                .attr(
+                                                                                    "y", 
+                                                                                    // ( 1 * xScale3(pitch.frame.length)) +
+                                                                                    ( 0.1 * xScale3(pitch.frame.length))
+                                                                                )
+                                                                                .attr("font-size", "0.7em")
+                                                                                .on('click', function() {
+                                                                                    HighlightedEventsPanel.remove();
+                                                                                    highlightedEventsDiv.text("Show top moves")
+                                                                                })
+                                                                                .on("mouseover", function(d) {
+                                                                                    d3.select(this).style("cursor", "pointer"); 
+                                                                                })
+                                                                                .on("mouseout", function(d) {
+                                                                                    d3.select(this).style("cursor", "default"); 
                                                                                 })
 
+                                                                                highlightedEventsDiv
+                                                                                    .text('Hide top moves')
+                                                                                    .style('color', 'black')
+                                                                                    .style("padding", "2px 15px")
 
 
-                                                                                HighlightedEventsPanel
-                                                                                    .append('text')
-                                                                                    .text('Close')
-                                                                                    .attr("fill", "white")
-                                                                                    .attr("alignment-baseline", "top")
-                                                                                    .attr("text-anchor", "end")
-                                                                                    .attr(
-                                                                                        "x", 
-                                                                                        ( 4.1 * xScale3(pitch.frame.width) )
-                                                                                    )
-                                                                                    .attr(
-                                                                                        "y", 
-                                                                                        // ( 1 * xScale3(pitch.frame.length)) +
-                                                                                        ( 0.1 * xScale3(pitch.frame.length))
-                                                                                    )
-                                                                                    .attr("font-size", "0.7em")
-                                                                                    .on('click', function() {
-                                                                                        HighlightedEventsPanel.remove();
-                                                                                        highlightedEventsDiv.text("Show top moves")
-                                                                                    })
-                                                                                    .on("mouseover", function(d) {
-                                                                                        d3.select(this).style("cursor", "pointer"); 
-                                                                                    })
-                                                                                    .on("mouseout", function(d) {
-                                                                                        d3.select(this).style("cursor", "default"); 
-                                                                                    })
+                                                                        } else {
 
-                                                                                    highlightedEventsDiv
-                                                                                        .text('Hide top moves')
-                                                                                        .style('color', 'black')
-                                                                                        .style("padding", "2px 15px")
+                                                                            d3.select('#HighlightedEventsPanel').remove()
+                                                                            highlightedEventsDiv.text("Show top moves")
+
+                                                                        }
+                                                                    }); 
 
 
-                                                                            } else {
-
-                                                                                d3.select('#HighlightedEventsPanel').remove()
-                                                                                highlightedEventsDiv.text("Show top moves")
-
-                                                                            }
-                                                                        }); 
-
-
-
-                                                                });
 
                                                             });
 
@@ -7173,13 +7167,13 @@ fBuildVisualisation = function (
                             });
 
                         });
-                    
+
                     });
-
+                
                 });
-            });
 
-        }
+            });
+        });
 
 
     }
