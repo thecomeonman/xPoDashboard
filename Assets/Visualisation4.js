@@ -168,7 +168,8 @@ fBuildVisualisation = function (
     // common constants
     if ( true ) {
 
-        cHighlightColour = '#FF69B4'
+        cOriginHighlightColour = '#FF69B4'
+        cDestinationHighlightColour = '#55c6f8' 
 
         // https://codepen.io/fieldwork/pen/RaKLrJ pitch code
 
@@ -567,7 +568,7 @@ fBuildVisualisation = function (
         addHighlightObject = function (
             pitchElement,
             className,
-            color = '#FF69B4'
+            color
         ) {
 
             if ( false ) {
@@ -625,7 +626,7 @@ fBuildVisualisation = function (
                 )
                 .style(
                     "fill", 
-                    // cHighlightColour
+                    // cOriginHighlightColour
                     // 'none'
                     '#cccccc'
                     // "url(#circles-1)"
@@ -906,7 +907,14 @@ fBuildVisualisation = function (
                                         TableID = 'ActionCounts',
                                         PositionsToInclude = PositionsToInclude,
                                         pitch,
-                                        dataTimePlayed
+                                        dataTimePlayed,
+                                        pitchElementPassPanel3,
+                                        pitchElementPassCumulativePanel3,
+                                        pitchElementRunPanel3,
+                                        pitchElementRunCumulativePanel3,
+                                        pitchElementShotPanel3,
+                                        pitchElementShotCumulativePanel3
+
                                     )
 
                                     svgPanel.selectAll(".histogramindicators")
@@ -1025,7 +1033,13 @@ fBuildVisualisation = function (
                                         TableID = 'ActionCounts',
                                         PositionsToInclude = PositionsToInclude,
                                         pitch,
-                                        dataTimePlayed
+                                        dataTimePlayed,
+                                        pitchElementPassPanel3,
+                                        pitchElementPassCumulativePanel3,
+                                        pitchElementRunPanel3,
+                                        pitchElementRunCumulativePanel3,
+                                        pitchElementShotPanel3,
+                                        pitchElementShotCumulativePanel3
                                     )
     
                                     
@@ -1116,7 +1130,13 @@ fBuildVisualisation = function (
                                     TableID = 'ActionCounts',
                                     PositionsToInclude = PositionsToInclude,
                                     pitch,
-                                    dataTimePlayed
+                                    dataTimePlayed,
+                                    pitchElementPassPanel3,
+                                    pitchElementPassCumulativePanel3,
+                                    pitchElementRunPanel3,
+                                    pitchElementRunCumulativePanel3,
+                                    pitchElementShotPanel3,
+                                    pitchElementShotCumulativePanel3
                                 )
 
             
@@ -1175,7 +1195,13 @@ fBuildVisualisation = function (
                             TableID = 'ActionCounts',
                             PositionsToInclude = PositionsToInclude,
                             pitch,
-                            dataTimePlayed
+                            dataTimePlayed,
+                            pitchElementPassPanel3,
+                            pitchElementPassCumulativePanel3,
+                            pitchElementRunPanel3,
+                            pitchElementRunCumulativePanel3,
+                            pitchElementShotPanel3,
+                            pitchElementShotCumulativePanel3
                         )
 
                         d3.selectAll('.highlightDestination')
@@ -1306,7 +1332,13 @@ fBuildVisualisation = function (
                                         TableID = 'ActionCounts',
                                         PositionsToInclude = PositionsToInclude,
                                         pitch,
-                                        dataTimePlayed
+                                        dataTimePlayed,
+                                        pitchElementPassPanel3,
+                                        pitchElementPassCumulativePanel3,
+                                        pitchElementRunPanel3,
+                                        pitchElementRunCumulativePanel3,
+                                        pitchElementShotPanel3,
+                                        pitchElementShotCumulativePanel3
                                     )
 
                                     svgPanel.selectAll(".histogramindicators")
@@ -1423,7 +1455,13 @@ fBuildVisualisation = function (
                                         TableID = 'ActionCounts',
                                         PositionsToInclude = PositionsToInclude,
                                         pitch,
-                                        dataTimePlayed
+                                        dataTimePlayed,
+                                        pitchElementPassPanel3,
+                                        pitchElementPassCumulativePanel3,
+                                        pitchElementRunPanel3,
+                                        pitchElementRunCumulativePanel3,
+                                        pitchElementShotPanel3,
+                                        pitchElementShotCumulativePanel3
                                     )
     
                                     
@@ -1508,7 +1546,13 @@ fBuildVisualisation = function (
                                     TableID = 'ActionCounts',
                                     PositionsToInclude = PositionsToInclude,
                                     pitch,
-                                    dataTimePlayed
+                                    dataTimePlayed,
+                                    pitchElementPassPanel3,
+                                    pitchElementPassCumulativePanel3,
+                                    pitchElementRunPanel3,
+                                    pitchElementRunCumulativePanel3,
+                                    pitchElementShotPanel3,
+                                    pitchElementShotCumulativePanel3
                                 )
 
 
@@ -1572,7 +1616,13 @@ fBuildVisualisation = function (
                             TableID = 'ActionCounts',
                             PositionsToInclude = PositionsToInclude,
                             pitch,
-                            dataTimePlayed
+                            dataTimePlayed,
+                            pitchElementPassPanel3,
+                            pitchElementPassCumulativePanel3,
+                            pitchElementRunPanel3,
+                            pitchElementRunCumulativePanel3,
+                            pitchElementShotPanel3,
+                            pitchElementShotCumulativePanel3
                         )
 
                         clearSelection()
@@ -1623,11 +1673,11 @@ fBuildVisualisation = function (
                 .style("stroke-opacity", '1' )
                 // .style(
                 //     "stroke", 
-                //     cHighlightColour
+                //     cOriginHighlightColour
                 // )
                 // .style(
                 //     "fill", 
-                //     // cHighlightColour
+                //     // cOriginHighlightColour
                 //     'none'
                 // )
                 // .style(
@@ -2196,79 +2246,86 @@ fBuildVisualisation = function (
 
             addHighlightObject(
                 pitchElementOriginPanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementOriginCumulativePanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementShotPanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementShotCumulativePanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementPassPanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementRunPanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementPassCumulativePanel3,
-                'highlightOrigin'
+                'highlightOrigin',
+                cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementRunCumulativePanel3,
                 'highlightOrigin',
-                color = cHighlightColour
+                color = cOriginHighlightColour
             )
 
             addHighlightObject(
                 pitchElementOriginPanel3,
                 'highlightDestination',
-                color = '#55c6f8'
+                color = cDestinationHighlightColour
             )
 
             addHighlightObject(
                 pitchElementOriginCumulativePanel3,
                 'highlightDestination',
-                color = '#55c6f8'
+                color = cDestinationHighlightColour
             )
 
             addHighlightObject(
                 pitchElementPassPanel3,
                 'highlightDestination',
-                color = '#55c6f8'
+                color = cDestinationHighlightColour
             )
 
             addHighlightObject(
                 pitchElementRunPanel3,
                 'highlightDestination',
-                color = '#55c6f8'
+                color = cDestinationHighlightColour
             )
 
             addHighlightObject(
                 pitchElementPassCumulativePanel3,
                 'highlightDestination',
-                color = '#55c6f8'
+                color = cDestinationHighlightColour
             )
 
             addHighlightObject(
                 pitchElementRunCumulativePanel3,
                 'highlightDestination',
-                color = '#55c6f8'
+                color = cDestinationHighlightColour
             )
 
             if ( whichColourScale == selectedSetCode + '/' ) {
@@ -4170,7 +4227,13 @@ fBuildVisualisation = function (
                                         TableID = 'ActionCounts',
                                         PositionsToInclude = PositionsToInclude,
                                         pitch,
-                                        dataTimePlayed
+                                        dataTimePlayed,
+                                        pitchElementPassPanel3,
+                                        pitchElementPassCumulativePanel3,
+                                        pitchElementRunPanel3,
+                                        pitchElementRunCumulativePanel3,
+                                        pitchElementShotPanel3,
+                                        pitchElementShotCumulativePanel3
                                     )
 
                                 } else {
@@ -4316,7 +4379,13 @@ fBuildVisualisation = function (
                                 TableID = 'ActionCounts',
                                 PositionsToInclude = PositionsToInclude,
                                 pitch,
-                                dataTimePlayed
+                                dataTimePlayed,
+                                pitchElementPassPanel3,
+                                pitchElementPassCumulativePanel3,
+                                pitchElementRunPanel3,
+                                pitchElementRunCumulativePanel3,
+                                pitchElementShotPanel3,
+                                pitchElementShotCumulativePanel3
                             )
 
                             Panel3Click['x'] = null
@@ -4670,7 +4739,13 @@ fBuildVisualisation = function (
                                     TableID = 'ActionCounts',
                                     PositionsToInclude,
                                     pitch,
-                                    dataTimePlayed
+                                    dataTimePlayed,
+                                    pitchElementPassPanel3,
+                                    pitchElementPassCumulativePanel3,
+                                    pitchElementRunPanel3,
+                                    pitchElementRunCumulativePanel3,
+                                    pitchElementShotPanel3,
+                                    pitchElementShotCumulativePanel3
                                 )
 
                             },
@@ -4808,7 +4883,13 @@ fBuildVisualisation = function (
                                 TableID = 'ActionCounts',
                                 PositionsToInclude,
                                 pitch,
-                                dataTimePlayed
+                                dataTimePlayed,
+                                pitchElementPassPanel3,
+                                pitchElementPassCumulativePanel3,
+                                pitchElementRunPanel3,
+                                pitchElementRunCumulativePanel3,
+                                pitchElementShotPanel3,
+                                pitchElementShotCumulativePanel3
                             )
 
                             Panel3Click['endX'] = null
@@ -4904,7 +4985,13 @@ fBuildVisualisation = function (
             TableID,
             PositionsToInclude = [],
             pitch,
-            dataTimePlayed
+            dataTimePlayed,
+            pitchElementPassPanel3,
+            pitchElementPassCumulativePanel3,
+            pitchElementRunPanel3,
+            pitchElementRunCumulativePanel3,
+            pitchElementShotPanel3,
+            pitchElementShotCumulativePanel3
         ) {
 
 
@@ -5218,11 +5305,312 @@ fBuildVisualisation = function (
                 .enter()
                 .append("tr")
                 .attr('id', function(d) { return 'SNO' + d.SNO })
-                .on("mouseover", function(d) {
-                    d3.select(this).style("cursor", "pointer"); 
-                })
                 .on("mouseout", function(d) {
+                    
                     d3.select(this).style("cursor", "default"); 
+
+                    pitchElementPassPanel3.selectAll('.' + TableID + '.Events' ).remove()
+                    pitchElementPassCumulativePanel3.selectAll('.' + TableID + '.Events' ).remove()
+                        
+                    pitchElementRunPanel3.selectAll('.' + TableID + '.Events' ).remove()
+                    pitchElementRunCumulativePanel3.selectAll('.' + TableID + '.Events' ).remove()                        
+                        
+                    pitchElementShotPanel3.selectAll('.' + TableID + '.Events' ).remove()
+                    pitchElementShotCumulativePanel3.selectAll('.' + TableID + '.Events' ).remove()
+                        
+
+                    d3.selectAll('.highlightDestination')
+                        .style(
+                            "stroke-opacity",
+                            1
+                        )    
+                        
+                    d3.selectAll('.highlightOrigin')
+                        .style(
+                            "stroke-opacity",
+                            1
+                        )     
+                        
+                })
+                .on("mouseover", function(d) {
+
+                    d3.select(this).style("cursor", "pointer"); 
+
+                    dataAllEventsSubsetPass = dataAllEventsSubset.filter(
+                        function(p) {
+                            return 'Pass' == p.event &
+                                d.To == p.recipientPositionName & 
+                                d.From == p.positionName;
+                        }
+                    )
+
+                    pitchElementPassPanel3.selectAll()
+                        .data(dataAllEventsSubsetPass)
+                        .enter()
+                        .append('line')
+                        .attr('class', function(d) { 
+                            return TableID + ' Events' 
+                        })
+                        .attr("x1", function (d) { return xScale3(d.x) })
+                        .attr("y1", function (d) { return yScale3(d.y) })
+                        .attr("x2", function (d) { return xScale3(d.endX) })
+                        .attr("y2", function (d) { return yScale3(d.endY) })
+                        .style('stroke','white')
+                        .style('stroke-opacity', 0.2)
+                        
+                    pitchElementPassPanel3.selectAll()
+                        .data(dataAllEventsSubsetPass)
+                        .enter()
+                        .append('circle')
+                        .attr('class', function(d) { 
+                            return TableID + ' Events' 
+                        })
+                        .attr("r", function (d) { return xScale3(0.5) })
+                        .attr("cx", function (d) { return xScale3(d.x) })
+                        .attr("cy", function (d) { return yScale3(d.y) })
+                        .style('stroke',cOriginHighlightColour)
+                        .style('fill',cOriginHighlightColour)
+                        .style("fill-opacity", 0.2)
+                        
+
+                        
+                    pitchElementPassPanel3.selectAll()
+                        .data(dataAllEventsSubsetPass)
+                        .enter()
+                        .append('circle')
+                        .attr('class', function(d) { 
+                            return TableID + ' Events' 
+                        })
+                        .attr("r", function (d) { return xScale3(0.5) })
+                        .attr("cx", function (d) { return xScale3(d.endX) })
+                        .attr("cy", function (d) { return yScale3(d.endY) })
+                        .style('stroke',cDestinationHighlightColour)
+                        .style('fill',cDestinationHighlightColour)
+                        .style("fill-opacity", 0.2)
+
+
+                    pitchElementPassCumulativePanel3.selectAll()
+                        .data(dataAllEventsSubsetPass)
+                        .enter()
+                        .append('line')
+                        .attr('class', function(d) { 
+                            return TableID + ' Events' 
+                        })
+                        .attr("x1", function (d) { return xScale3(d.x) })
+                        .attr("y1", function (d) { return yScale3(d.y) })
+                        .attr("x2", function (d) { return xScale3(d.endX) })
+                        .attr("y2", function (d) { return yScale3(d.endY) })
+                        .style('stroke','white')
+                        .style('stroke-opacity', 0.2)
+                        
+                    pitchElementPassCumulativePanel3.selectAll()
+                        .data(dataAllEventsSubsetPass)
+                        .enter()
+                        .append('circle')
+                        .attr('class', function(d) { 
+                            return TableID + ' Events' 
+                        })
+                        .attr("r", function (d) { return xScale3(0.5) })
+                        .attr("cx", function (d) { return xScale3(d.x) })
+                        .attr("cy", function (d) { return yScale3(d.y) })
+                        .style('stroke',cOriginHighlightColour)
+                        .style('fill',cOriginHighlightColour)
+                        .style("fill-opacity", 0.2)
+                        
+
+                        
+                    pitchElementPassCumulativePanel3.selectAll()
+                        .data(dataAllEventsSubsetPass)
+                        .enter()
+                        .append('circle')
+                        .attr('class', function(d) { 
+                            return TableID + ' Events' 
+                        })
+                        .attr("r", function (d) { return xScale3(0.5) })
+                        .attr("cx", function (d) { return xScale3(d.endX) })
+                        .attr("cy", function (d) { return yScale3(d.endY) })
+                        .style('stroke',cDestinationHighlightColour)
+                        .style('fill',cDestinationHighlightColour)
+                        .style("fill-opacity", 0.2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        dataAllEventsSubsetRun = dataAllEventsSubset.filter(
+                            function(p) {
+                                return 'Run' == p.event &
+                                    d.To == p.recipientPositionName & 
+                                    d.From == p.positionName;
+                            }
+                        )
+    
+                        pitchElementRunPanel3.selectAll()
+                            .data(dataAllEventsSubsetRun)
+                            .enter()
+                            .append('line')
+                            .attr('class', function(d) { 
+                                return TableID + ' Events' 
+                            })
+                            .attr("x1", function (d) { return xScale3(d.x) })
+                            .attr("y1", function (d) { return yScale3(d.y) })
+                            .attr("x2", function (d) { return xScale3(d.endX) })
+                            .attr("y2", function (d) { return yScale3(d.endY) })
+                            .style('stroke','white')
+                            .style('stroke-opacity', 0.2)
+                            
+                        pitchElementRunPanel3.selectAll()
+                            .data(dataAllEventsSubsetRun)
+                            .enter()
+                            .append('circle')
+                            .attr('class', function(d) { 
+                                return TableID + ' Events' 
+                            })
+                            .attr("r", function (d) { return xScale3(0.5) })
+                            .attr("cx", function (d) { return xScale3(d.x) })
+                            .attr("cy", function (d) { return yScale3(d.y) })
+                            .style('stroke',cOriginHighlightColour)
+                            .style('fill',cOriginHighlightColour)
+                            .style("fill-opacity", 0.2)
+                            
+    
+                            
+                        pitchElementRunPanel3.selectAll()
+                            .data(dataAllEventsSubsetRun)
+                            .enter()
+                            .append('circle')
+                            .attr('class', function(d) { 
+                                return TableID + ' Events' 
+                            })
+                            .attr("r", function (d) { return xScale3(0.5) })
+                            .attr("cx", function (d) { return xScale3(d.endX) })
+                            .attr("cy", function (d) { return yScale3(d.endY) })
+                            .style('stroke',cDestinationHighlightColour)
+                            .style('fill',cDestinationHighlightColour)
+                            .style("fill-opacity", 0.2)
+    
+    
+                        pitchElementRunCumulativePanel3.selectAll()
+                            .data(dataAllEventsSubsetRun)
+                            .enter()
+                            .append('line')
+                            .attr('class', function(d) { 
+                                return TableID + ' Events' 
+                            })
+                            .attr("x1", function (d) { return xScale3(d.x) })
+                            .attr("y1", function (d) { return yScale3(d.y) })
+                            .attr("x2", function (d) { return xScale3(d.endX) })
+                            .attr("y2", function (d) { return yScale3(d.endY) })
+                            .style('stroke','white')
+                            .style('stroke-opacity', 0.2)
+                            
+                        pitchElementRunCumulativePanel3.selectAll()
+                            .data(dataAllEventsSubsetRun)
+                            .enter()
+                            .append('circle')
+                            .attr('class', function(d) { 
+                                return TableID + ' Events' 
+                            })
+                            .attr("r", function (d) { return xScale3(0.5) })
+                            .attr("cx", function (d) { return xScale3(d.x) })
+                            .attr("cy", function (d) { return yScale3(d.y) })
+                            .style('stroke',cOriginHighlightColour)
+                            .style('fill',cOriginHighlightColour)
+                            .style("fill-opacity", 0.2)
+                            
+    
+                            
+                        pitchElementRunCumulativePanel3.selectAll()
+                            .data(dataAllEventsSubsetRun)
+                            .enter()
+                            .append('circle')
+                            .attr('class', function(d) { 
+                                return TableID + ' Events' 
+                            })
+                            .attr("r", function (d) { return xScale3(0.5) })
+                            .attr("cx", function (d) { return xScale3(d.endX) })
+                            .attr("cy", function (d) { return yScale3(d.endY) })
+                            .style('stroke',cDestinationHighlightColour)
+                            .style('fill',cDestinationHighlightColour)
+                            .style("fill-opacity", 0.2)
+    
+
+
+
+
+
+
+
+
+
+                            dataAllEventsSubsetShot = dataAllEventsSubset.filter(
+                                function(p) {
+                                    return 'Shot' == p.event &
+                                        d.To == p.recipientPositionName & 
+                                        d.From == p.positionName;
+                                }
+                            )
+        
+                            pitchElementShotPanel3.selectAll()
+                                .data(dataAllEventsSubsetShot)
+                                .enter()
+                                .append('circle')
+                                .attr('class', function(d) { 
+                                    return TableID + ' Events' 
+                                })
+                                .attr("r", function (d) { return xScale3(0.5) })
+                                .attr("cx", function (d) { return xScale3(d.x) })
+                                .attr("cy", function (d) { return yScale3(d.y) })
+                                .style('stroke',cOriginHighlightColour)
+                                .style('fill',cOriginHighlightColour)
+                                // .style("fill-opacity", 0.2)
+                                
+        
+                            pitchElementShotCumulativePanel3.selectAll()
+                                .data(dataAllEventsSubsetShot)
+                                .enter()
+                                .append('circle')
+                                .attr('class', function(d) { 
+                                    return TableID + ' Events' 
+                                })
+                                .attr("r", function (d) { return xScale3(0.5) })
+                                .attr("cx", function (d) { return xScale3(d.x) })
+                                .attr("cy", function (d) { return yScale3(d.y) })
+                                .style('stroke',cOriginHighlightColour)
+                                .style('fill',cOriginHighlightColour)
+                                // .style("fill-opacity", 0.2)
+                                
+
+
+
+
+
+
+
+
+
+                    d3.selectAll('.highlightDestination')
+                        .style("stroke-opacity", 0)
+                        
+                    d3.selectAll('.highlightOrigin')
+                        .style("stroke-opacity", 0)     
+                    
+
                 })
                 .on(
                     'click',
@@ -6035,7 +6423,7 @@ fBuildVisualisation = function (
                         .attr('y', 700 * nRatioOfScreenSize)
                         .attr('font-size', +nRatioOfScreenSize + 'em')
                         .text(
-                            'You can click on any of the highlighted actions in the\
+                            'You can hover or click on any of the displayed actions in the\
                             table to explore the possessions in which those actions\
                             occurred.'
                             
