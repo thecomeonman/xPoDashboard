@@ -6174,7 +6174,7 @@ fBuildVisualisation = function (
                         .attr('y', 170 * nRatioOfScreenSize)
                         .attr('font-size', +nRatioOfScreenSize + 'em')
                         .text(
-                            'Click here for details about xPo'
+                            'Click here for an intro to xPo'
                         )
                         .call(wrap, 250 * nRatioOfScreenSize)
                         .style('pointer-events','none')
@@ -6667,6 +6667,7 @@ fBuildVisualisation = function (
 
                 d3.csv('./Data/' + (setCode.substring(0, setCode.indexOf('_', setCode.indexOf('_') + 1))).replace(/_/g,'/') + '/AllEvents.csv').then( function(dataAllEvents) {
 
+                    // not used anywhere
                     d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilities.csv').then( function(dataDestinationProbabilitiesFor) {
 
                         d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/DestinationProbabilitiesPass.csv').then( function(dataDestinationProbabilitiesPassFor) {
@@ -6675,8 +6676,10 @@ fBuildVisualisation = function (
 
                                 d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilities.csv').then( function(dataOriginProbabilitiesFor) {
 
+                                    // not used anywhere
                                     d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesPass.csv').then( function(dataOriginProbabilitiesPassFor) {
 
+                                        // not used anywhere
                                         d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesRun.csv').then( function(dataOriginProbabilitiesRunFor) {
 
                                             d3.csv('./Data/' + setCode.replace(/_/g,'/') + '/OriginProbabilitiesShot.csv').then( function(dataOriginProbabilitiesShotFor) {
